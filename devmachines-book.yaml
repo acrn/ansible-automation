@@ -1,0 +1,121 @@
+---
+- hosts: devmachines
+
+  vars:
+
+    lein:
+      script:
+        dest: ~/bin/lein
+        checksum: "b59d741e3ad28b3a11ea28eab417133492ca2138"
+        url:
+          "https://raw.githubusercontent.com/technomancy/leiningen/2.5.1/bin/lein"
+      standalone:
+        dest: "~/.lein/self-installs/leiningen-2.5.1-standalone.jar"
+        checksum: "1c526e6573713b0635a1f2d52502ffa04ae45383"
+
+  tasks:
+
+# setup
+  - name: ~/bin
+    file: path=~/bin state=directory mode=0755
+  - name: ~/dotfiles
+    file: path=~/dotfiles state=directory mode=0755
+
+  - name: dnf makecache
+    command: dnf makecache
+    changed_when: no
+
+# util
+  - name: install utility packages
+    tags: util
+    dnf: name={{item}} state=latest
+    become: yes
+    with_items:
+      - ansible
+      - docker
+      - htop
+      - mc
+      - nmap
+      - npm
+      - pwsafe
+      - tmux
+      - vim-X11
+      - vim-enhanced
+
+# versioning
+  - name: install versioning packages
+    tags: versioning
+    dnf: name={{item}} state=latest
+    become: yes
+    with_items:
+      - git-svn
+      - mercurial
+      - tig
+
+# python
+  - name: install python packages
+    tags: python
+    dnf: name={{item}} state=latest
+    become: yes
+    with_items:
+      - python-devel
+      - python-ipython
+      - python-virtualenv
+      - python3-ipython
+      - python3-virtualenv
+
+# c
+  - name: install c packages
+    tags: c
+    dnf: name={{item}} state=latest
+    become: yes
+    with_items:
+      - clang
+      - gcc
+      - kernel-devel
+
+# clojure
+
+  # dowload lein
+  - tags: clojure
+    stat: path={{lein.script.dest}}
+    register: stat_lein
+
+  - name: download leiningen
+    tags: clojure
+    when: stat_lein.stat.exists == false
+    get_url: url="{{lein.script.url}}" dest="{{lein.script.dest}}" mode=0755
+
+  - tags: clojure
+    stat: path={{lein.script.dest}}
+    register: stat_lein
+
+  - fail: msg="lein file checksum mismatch"
+    tags: clojure
+    when: stat_lein.stat.checksum != "{{lein.script.checksum}}"
+
+  # install lein
+  - tags: clojure
+    stat: path="{{lein.standalone.dest}}"
+    register: stat_lein_standalone
+
+  - name: install leiningen
+    tags: clojure
+    when: stat_lein_standalone.stat.exists == false
+    command: "{{lein.script.dest}}"
+
+  - tags: clojure
+    stat: path="{{lein.standalone.dest}}"
+    register: stat_lein_standalone
+
+  - fail: msg="lein standalone checksum mismatch"
+    tags: clojure
+    when: stat_lein_standalone.stat.checksum != "{{lein.standalone.checksum}}"
+
+# go
+  - name: install go packages
+    tags: go
+    dnf: name={{item}} state=latest
+    become: yes
+    with_items:
+      - golang
