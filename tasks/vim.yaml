@@ -1,6 +1,10 @@
 ---
-- name: ~/dotfiles
-  file: path=~/dotfiles state=directory mode=0755
+- file: path=~/dotfiles/vim/bundle state=directory mode=0755
+  tags: vim
+- file: path=~/dotfiles/vim/tmp state=directory mode=0755
+  tags: vim
+- file: src=~/dotfiles/vim dest=~/.vim state=link
+  tags: vim
 
 - name: install vim packages
   when: false
@@ -11,4 +15,41 @@
 
 - name: vimrc
   tags: vim
-  template: src="templates/vimrc" dest="~/dotfiles/vimrc"
+  template: src="templates/vimrc" dest="~/dotfiles/vim/vimrc"
+
+- name: gvimrc
+  tags: vim
+  template: src="templates/gvimrc" dest="~/dotfiles/vim/gvimrc"
+
+- name: "update plugins"
+  git: repo="https://github.com/{{item}}.git"
+       dest="~/dotfiles/vim/bundle/{{item.split('/')[1]}}"
+  tags: vim
+  with_items: "{{vim.plugins}}"
+  # TODO: Why is emmet always "changed"?
+
+- name: Vundle PluginUpdate
+  tags: vim
+  command: vim -e +PluginUpdate +qa
+  when: "'gmarik/Vundle.vim' in vim.plugins"
+  register: plugin_update
+
+- name: install ycm build dependencies  
+  tags: vim
+  dnf: name={{item}} state=latest
+  become: yes
+  with_items:
+    - cmake
+    - gcc
+    - gcc-c++
+    - python-devel
+  when: "'Valloric/YouCompleteMe' in vim.plugins"
+  # TODO: what are they?
+
+- name: compile YouCompleteMe
+  tags: vim
+  command: "./install.sh"  #yolo, this is all highly insucure anyway
+  args:
+    chdir: "~/dotfiles/vim/bundle/YouCompleteMe"
+    creates: "~/dotfiles/vim/bundle/YouCompleteMe/third_party/ycmd/ycm_client_support.so"
+  when: "'Valloric/YouCompleteMe' in vim.plugins"

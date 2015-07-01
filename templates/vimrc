@@ -1,12 +1,15 @@
 set nocompatible
 filetype off
-" vundle
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-{% for plugin in vim.plugins %}
-Plugin '{{ plugin }}'
-{% endfor %}
-call vundle#end()
+
+{% if 'gmarik/Vundle.vim' in vim.plugins %}
+  " vundle
+  set rtp+=~/.vim/bundle/Vundle.vim
+  call vundle#begin()
+  {% for plugin in vim.plugins %}
+     Plugin '{{ plugin }}'
+  {% endfor %}
+  call vundle#end()
+{% endif %}
 
 " mappings
 let mapleader = ' '
@@ -20,8 +23,8 @@ set showmatch
 set smartcase
 
 {% if 'Valloric/YouCompleteMe' in vim.plugins %}
-" turn down ycm logging
-let g:ycm_server_log_level = 'warning'
+  " turn down ycm logging
+  let g:ycm_server_log_level = 'warning'
 {% endif %}
 
 filetype plugin indent on
@@ -67,9 +70,9 @@ nnoremap <leader>t :TagbarToggle<cr>
 nnoremap <leader>riw yiw:/gc<home>%s/\<<C-r>"\>/
 nnoremap <leader>riW yiW:/gc<home>%s/\<<C-r>"\>/
 
-" search
 {% if 'rking.ag.vim' in vim.plugins %}
-nnoremap <leader>a :Ag 
+  " search
+  nnoremap <leader>a :Ag 
 {% endif %}
 
 vnoremap <leader>n :normal 
@@ -90,27 +93,22 @@ au BufRead,BufNewFile *.vala,*.vapi setfiletype vala
 autocmd BufRead,BufNewFile *.html,*.js,*.css,*.scss,*.yaml
     \ setl shiftwidth=2 tabstop=2 softtabstop=2
 
-if $COLORTERM == 'gnome-terminal'
-  set t_Co=256
-  set background=dark
-  colorscheme solarized
-endif
+" cosmetics
 
 " highlight lines that are 80+ chars
 call matchadd('ColorColumn', '\%80v', 20)
 
-" cosmetics
 if $COLORTERM == 'gnome-terminal'
-  set t_Co=256
-  set background=dark
-  {% if 'Solarized' in vim.plugins %}
+set t_Co=256
+set background=dark
+{% if 'Solarized' in vim.plugins %}
   colorscheme solarized
-  {% endif %}
+{% endif %}
 endif
 
 {% if 'itchyny/lightline.vim' in vim.plugins %}
-let g:lightline = {
-  \ 'separator': {'left':'➠', 'right':'⇚'},
-  \ 'subseparator': {'left':'➟', 'right':'⁕'}}
-set listchars=tab:▸⋅,eol:¬,trail:⋅
+  let g:lightline = {
+    \ 'separator': {'left':'➠', 'right':'⇚'},
+    \ 'subseparator': {'left':'➟', 'right':'⁕'}}
+  set listchars=tab:▸⋅,eol:¬,trail:⋅
 {% endif %}

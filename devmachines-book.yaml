@@ -18,12 +18,9 @@
         - vim-X11
         - vim-enhanced
       plugins:
-        - Solarized
-        - Tagbar
-        - Valloric/YouCompleteMe
+        #- faith/vim-go   keeps asking for github password
         - gmarik/Vundle.vim
         - godlygeek/tabular
-        - faith/vim-go
         - guns/vim-clojure-static
         - itchyny/lightline.vim
         - kien/ctrlp.vim
@@ -33,6 +30,9 @@
         - tpope/vim-fireplace
         - tpope/vim-fugitive
         - tpope/vim-surround
+        - Valloric/YouCompleteMe
+        - vim-scripts/Solarized
+        - vim-scripts/Tagbar
 
   tasks:
   - include: tasks/clojure.yaml
@@ -88,6 +88,7 @@
     with_items:
       - clang
       - gcc
+      - gcc-c++
       - kernel-devel
 
 # go
