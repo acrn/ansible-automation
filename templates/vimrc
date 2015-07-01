@@ -1,0 +1,116 @@
+set nocompatible
+filetype off
+" vundle
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+{% for plugin in vim.plugins %}
+Plugin '{{ plugin }}'
+{% endfor %}
+call vundle#end()
+
+" mappings
+let mapleader = ' '
+"  powerline
+set laststatus=2
+
+"  searching
+set hlsearch
+set incsearch
+set showmatch
+set smartcase
+
+{% if 'Valloric/YouCompleteMe' in vim.plugins %}
+" turn down ycm logging
+let g:ycm_server_log_level = 'warning'
+{% endif %}
+
+filetype plugin indent on
+
+" indentation and such
+set nu
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set expandtab
+set smarttab
+set autoindent
+set nosmartindent
+set ruler
+
+set autowrite
+set autoread
+
+set hidden
+set wildignore=*/build/*,*/.svn/*,*/.git/*,*.class,*.zip
+set wildignore+=*/__pycache__/*,*.egg,*.pyc,*.pyo,*.o,*/bin/*
+set wildmenu
+set foldmethod=indent
+set foldlevelstart=20
+
+syntax on
+syntax enable
+
+" remaps
+nnoremap <C-v> <C-w>
+nnoremap <C-k> 10k
+nnoremap <C-j> 10j
+nnoremap <esc> :
+nnoremap <up> :so %<CR>
+nnoremap <down> :!./%<CR>
+nnoremap <left> :bn<CR>
+nnoremap <right> :bp<CR>
+nnoremap <leader>i :set list!<CR>
+nnoremap <leader>p :set paste!<CR>
+nnoremap <leader>t :TagbarToggle<cr>
+
+" replace
+nnoremap <leader>riw yiw:/gc<home>%s/\<<C-r>"\>/
+nnoremap <leader>riW yiW:/gc<home>%s/\<<C-r>"\>/
+
+" search
+{% if 'rking.ag.vim' in vim.plugins %}
+nnoremap <leader>a :Ag 
+{% endif %}
+
+vnoremap <leader>n :normal 
+
+" swap
+set directory=~/.vim/tmp
+set backupdir=~/.vim/tmp
+
+" ctags
+set tags=./tags;$HOME
+
+" autocommands
+au VimResized * exe "normal! \<c-w>="
+
+autocmd BufRead *.vala,*.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
+au BufRead,BufNewFile *.vala,*.vapi setfiletype vala
+
+autocmd BufRead,BufNewFile *.html,*.js,*.css,*.scss,*.yaml
+    \ setl shiftwidth=2 tabstop=2 softtabstop=2
+
+if $COLORTERM == 'gnome-terminal'
+  set t_Co=256
+  set background=dark
+  colorscheme solarized
+endif
+
+" highlight lines that are 80+ chars
+call matchadd('ColorColumn', '\%80v', 20)
+
+" cosmetics
+if $COLORTERM == 'gnome-terminal'
+  set t_Co=256
+  set background=dark
+  {% if 'Solarized' in vim.plugins %}
+  colorscheme solarized
+  {% endif %}
+endif
+
+{% if 'itchyny/lightline.vim' in vim.plugins %}
+let g:lightline = {
+  \ 'separator': {'left':'➠', 'right':'⇚'},
+  \ 'subseparator': {'left':'➟', 'right':'⁕'}}
+set listchars=tab:▸⋅,eol:¬,trail:⋅
+{% endif %}

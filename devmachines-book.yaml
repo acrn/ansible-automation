@@ -13,6 +13,27 @@
         dest: "~/.lein/self-installs/leiningen-2.5.1-standalone.jar"
         checksum: "1c526e6573713b0635a1f2d52502ffa04ae45383"
 
+    vim:
+      packages:
+        - vim-X11
+        - vim-enhanced
+      plugins:
+        - Solarized
+        - Tagbar
+        - Valloric/YouCompleteMe
+        - gmarik/Vundle.vim
+        - godlygeek/tabular
+        - faith/vim-go
+        - guns/vim-clojure-static
+        - itchyny/lightline.vim
+        - kien/ctrlp.vim
+        - mattn/emmet-vim
+        - rking/ag.vim
+        - scrooloose/nerdcommenter
+        - tpope/vim-fireplace
+        - tpope/vim-fugitive
+        - tpope/vim-surround
+
   tasks:
 
 # setup
@@ -39,8 +60,6 @@
       - npm
       - pwsafe
       - tmux
-      - vim-X11
-      - vim-enhanced
 
 # versioning
   - name: install versioning packages
@@ -75,6 +94,17 @@
       - kernel-devel
 
 # clojure
+
+  # clean
+  - name: remove lein standalone
+    tags: clojure_clean
+    file: dest="{{lein.standalone.dest}}" state=absent
+    when: clean is defined
+
+  - name: remove lein script
+    tags: clojure_clean
+    file: dest="{{lein.script.dest}}" state=absent
+    when: clean is defined
 
   # dowload lein
   - tags: clojure
@@ -119,3 +149,15 @@
     become: yes
     with_items:
       - golang
+
+# vim
+  - name: install vim packages
+    when: false
+    tags: vim
+    dnf: name={{item}} state=latest
+    become: yes
+    with_items: "{{vim.packages}}"
+
+  - name: vimrc
+    tags: vim
+    template: src="templates/vimrc" dest="~/dotfiles/vimrc"
