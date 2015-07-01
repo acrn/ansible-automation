@@ -1,0 +1,50 @@
+---
+# clean
+- name: remove lein standalone
+  tags: clojure_clean
+  file: dest="{{lein.standalone.dest}}" state=absent
+  when: clean is defined
+
+- name: remove lein script
+  tags: clojure_clean
+  file: dest="{{lein.script.dest}}" state=absent
+  when: clean is defined
+
+# dowload lein
+- tags: clojure
+  stat: path={{lein.script.dest}}
+  register: stat_lein
+
+- name: ~/bin
+  file: path=~/bin state=directory mode=0755
+
+- name: download leiningen
+  tags: clojure
+  when: stat_lein.stat.exists == false
+  get_url: url="{{lein.script.url}}" dest="{{lein.script.dest}}" mode=0755
+
+- tags: clojure
+  stat: path={{lein.script.dest}}
+  register: stat_lein
+
+- fail: msg="lein file checksum mismatch"
+  tags: clojure
+  when: stat_lein.stat.checksum != "{{lein.script.checksum}}"
+
+# install lein
+- tags: clojure
+  stat: path="{{lein.standalone.dest}}"
+  register: stat_lein_standalone
+
+- name: install leiningen
+  tags: clojure
+  when: stat_lein_standalone.stat.exists == false
+  command: "{{lein.script.dest}}"
+
+- stat: path="{{lein.standalone.dest}}"
+  tags: clojure
+  register: stat_lein_standalone
+
+- fail: msg="lein standalone checksum mismatch"
+  tags: clojure
+  when: stat_lein_standalone.stat.checksum != "{{lein.standalone.checksum}}"

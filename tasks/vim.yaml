@@ -1,0 +1,14 @@
+---
+- name: ~/dotfiles
+  file: path=~/dotfiles state=directory mode=0755
+
+- name: install vim packages
+  when: false
+  tags: vim
+  dnf: name={{item}} state=latest
+  become: yes
+  with_items: "{{vim.packages}}"
+
+- name: vimrc
+  tags: vim
+  template: src="templates/vimrc" dest="~/dotfiles/vimrc"
