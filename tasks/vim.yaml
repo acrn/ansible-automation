@@ -7,21 +7,29 @@
   tags: vim
 
 - name: install vim packages
-  when: false
   tags: vim
   dnf: name={{item}} state=latest
   become: yes
   with_items: "{{vim.packages}}"
 
 - name: vimrc
-  tags: vim
+  tags:
+    - vim
+    - vimrc
   template: src="templates/vimrc" dest="~/dotfiles/vim/vimrc"
 
 - name: gvimrc
   tags: vim
   template: src="templates/gvimrc" dest="~/dotfiles/vim/gvimrc"
 
-- name: "update plugins"
+- name: update ycm
+  git: repo="https://github.com/Valloric/YouCompleteMe.git"
+       dest="~/dotfiles/vim/bundle/YouCompleteMe"
+  tags: vim
+  register: ycm_update
+  when: "'Valloric/YouCompleteMe' in vim.plugins"
+
+- name: update plugins
   git: repo="https://github.com/{{item}}.git"
        dest="~/dotfiles/vim/bundle/{{item.split('/')[1]}}"
   tags: vim
@@ -51,5 +59,4 @@
   command: "./install.sh"  #yolo, this is all highly insucure anyway
   args:
     chdir: "~/dotfiles/vim/bundle/YouCompleteMe"
-    creates: "~/dotfiles/vim/bundle/YouCompleteMe/third_party/ycmd/ycm_client_support.so"
-  when: "'Valloric/YouCompleteMe' in vim.plugins"
+  when: "'Valloric/YouCompleteMe' in vim.plugins and ycm_update.changed"
