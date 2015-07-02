@@ -40,7 +40,6 @@
   tags: vim
   command: vim -e +PluginUpdate +qa
   when: "'gmarik/Vundle.vim' in vim.plugins"
-  register: plugin_update
 
 - name: install ycm build dependencies  
   tags: vim
@@ -51,7 +50,7 @@
     - gcc
     - gcc-c++
     - python-devel
-  when: "'Valloric/YouCompleteMe' in vim.plugins"
+  when: "'Valloric/YouCompleteMe' in vim.plugins and ycm_update.changed"
   # TODO: what are they?
 
 - name: compile YouCompleteMe

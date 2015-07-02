@@ -1,3 +1,6 @@
+scriptencoding utf-8
+set encoding=utf-8
+
 set nocompatible
 filetype off
 
@@ -101,7 +104,7 @@ call matchadd('ColorColumn', '\%80v', 20)
 if $COLORTERM == 'gnome-terminal'
 set t_Co=256
 set background=dark
-{% if 'Solarized' in vim.plugins %}
+{% if 'vim-scripts/Solarized' in vim.plugins %}
   colorscheme solarized
 {% endif %}
 endif
