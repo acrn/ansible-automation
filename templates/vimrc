@@ -12,6 +12,14 @@ filetype off
      Plugin '{{ plugin }}'
   {% endfor %}
   call vundle#end()
+{% else %}
+  set rtp+=
+  {% for plugin in vim.plugins %}
+      \~/.vim/bundle/{{ plugin|regex_replace('.*/', '') }},
+  {% endfor %}
+  {% for plugin in vim.plugins %}
+      \~/.vim/bundle/{{ plugin|regex_replace('.*/', '') }}/after,
+  {% endfor %}
 {% endif %}
 
 " mappings
