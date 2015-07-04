@@ -1,0 +1,6 @@
+---
+- include: utils.yaml
+- include: vim.yaml
+- include: keyboard.yaml
+- include: development.yaml
+- include: clojure.yaml

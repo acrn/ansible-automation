@@ -1,0 +1,4 @@
+---
+- hosts: devmachines
+  roles:
+    - common

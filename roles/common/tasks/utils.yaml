@@ -2,11 +2,10 @@
 - file: path=~/dotfiles state=directory mode=0755
   tags: utils
 
-- name: stuff
+- name: render dotfile templates
   tags: [utils]
   template: src="templates/{{item}}" dest="~/dotfiles/{{item}}"
-  register: "{{item}}_template"
-  with_items: utils.dotfiles
+  with_items: dotfiles
 
 - name: list links in ~
   changed_when: false
@@ -19,9 +18,24 @@
   tags: [utils]
   file: dest=~/.{{item}} state=absent
   when: item not in dotlinks.stdout
-  with_items: utils.dotfiles
+  with_items: dotfiles
 
 - name: link files to ~
   file: src=~/dotfiles/{{item}} dest=~/.{{item}} state=link
   tags: [utils]
-  with_items: utils.dotfiles
+  with_items: dotfiles
+
+# util
+- name: install utility packages
+  tags: util
+  dnf: name={{item}} state=latest
+  become: yes
+  with_items:
+    - ansible
+    - docker
+    - htop
+    - mc
+    - nmap
+    - npm
+    - pwsafe
+    - tmux

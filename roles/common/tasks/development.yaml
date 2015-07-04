@@ -1,0 +1,41 @@
+---
+# versioning
+- name: install versioning packages
+  tags: versioning
+  dnf: name={{item}} state=latest
+  become: yes
+  with_items:
+    - git-svn
+    - mercurial
+    - tig
+
+# python
+- name: install python packages
+  tags: python
+  dnf: name={{item}} state=latest
+  become: yes
+  with_items:
+    - python-devel
+    - python-ipython
+    - python-virtualenv
+    - python3-ipython
+    - python3-virtualenv
+
+# c
+- name: install c packages
+  tags: c
+  dnf: name={{item}} state=latest
+  become: yes
+  with_items:
+    - clang
+    - gcc
+    - gcc-c++
+    - kernel-devel
+
+# go
+- name: install go packages
+  tags: go
+  dnf: name={{item}} state=latest
+  become: yes
+  with_items:
+    - golang

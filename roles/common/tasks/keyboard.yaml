@@ -1,0 +1,44 @@
+---
+- name: check if file is already modified
+  command: grep 'modified by ansible' "{{xkb_symbols_file}}"
+  tags: [keyboard]
+  register: grep
+  changed_when: false
+  ignore_errors: true
+
+- name: create temp file
+  command: mktemp
+  tags: [keyboard]
+  when: not grep.stdout
+  register: tmpfile
+
+- name: process keyboard layout
+  script: scripts/modify_xkb_layout.py {{xkb_symbols_file}} {{tmpfile.stdout}}
+  tags: [keyboard]
+  when: not grep.stdout
+  register: script_out
+
+- name: set file permissions
+  tags: [keyboard]
+  become: yes
+  when: not grep.stdout
+  file: path={{tmpfile.stdout}} owner=root group=root mode=0644
+
+- name: copy file to xkb folder
+  command: cp {{tmpfile.stdout}} {{xkb_symbols_file}}
+  tags: [keyboard]
+  when: not grep.stdout
+  become: yes
+
+- name: check gnome shell prefernce
+  command: gsettings get org.gnome.desktop.input-sources sources
+  tags: [keyboard]
+  register: input_sources
+  changed_when: false
+
+- name: set gnome shell preference
+  command: dbus-launch --exit-with-session gsettings
+             set org.gnome.desktop.input-sources sources
+             "{{gnome_shell_input_sources}}"
+  tags: [keyboard]
+  when: input_sources.stdout|replace(" ", "") != gnome_shell_input_sources|replace(" ", "")

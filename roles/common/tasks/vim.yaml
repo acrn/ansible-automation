@@ -10,7 +10,7 @@
   tags: vim
   dnf: name={{item}} state=latest
   become: yes
-  with_items: "{{vim.packages}}"
+  with_items: "{{vim_packages}}"
 
 - name: vimrc
   tags:
@@ -27,19 +27,19 @@
        dest="~/dotfiles/vim/bundle/YouCompleteMe"
   tags: vim
   register: ycm_update
-  when: "'Valloric/YouCompleteMe' in vim.plugins"
+  when: "'Valloric/YouCompleteMe' in vim_plugins"
 
 - name: update plugins
   git: repo="https://github.com/{{item}}.git"
        dest="~/dotfiles/vim/bundle/{{item.split('/')[1]}}"
   tags: vim
-  with_items: "{{vim.plugins}}"
+  with_items: "{{vim_plugins}}"
   # TODO: Why is emmet always "changed"?
 
 - name: Vundle PluginUpdate
   tags: vim
   command: vim -e +PluginUpdate +qa
-  when: "'gmarik/Vundle.vim' in vim.plugins"
+  when: "'gmarik/Vundle.vim' in vim_plugins"
 
 - name: install ycm build dependencies  
   tags: vim
@@ -50,7 +50,7 @@
     - gcc
     - gcc-c++
     - python-devel
-  when: "'Valloric/YouCompleteMe' in vim.plugins and ycm_update.changed"
+  when: "'Valloric/YouCompleteMe' in vim_plugins and ycm_update.changed"
   # TODO: what are they?
 
 - name: compile YouCompleteMe
@@ -58,4 +58,4 @@
   command: "./install.sh"  #yolo, this is all highly insucure anyway
   args:
     chdir: "~/dotfiles/vim/bundle/YouCompleteMe"
-  when: "'Valloric/YouCompleteMe' in vim.plugins and ycm_update.changed"
+  when: "'Valloric/YouCompleteMe' in vim_plugins and ycm_update.changed"

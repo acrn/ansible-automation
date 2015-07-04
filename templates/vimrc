@@ -4,20 +4,20 @@ set encoding=utf-8
 set nocompatible
 filetype off
 
-{% if 'gmarik/Vundle.vim' in vim.plugins %}
+{% if 'gmarik/Vundle.vim' in vim_plugins %}
   " vundle
   set rtp+=~/.vim/bundle/Vundle.vim
   call vundle#begin()
-  {% for plugin in vim.plugins %}
+  {% for plugin in vim_plugins %}
      Plugin '{{ plugin }}'
   {% endfor %}
   call vundle#end()
 {% else %}
   set rtp+=
-  {% for plugin in vim.plugins %}
+  {% for plugin in vim_plugins %}
       \~/.vim/bundle/{{ plugin|regex_replace('.*/', '') }},
   {% endfor %}
-  {% for plugin in vim.plugins %}
+  {% for plugin in vim_plugins %}
       \~/.vim/bundle/{{ plugin|regex_replace('.*/', '') }}/after,
   {% endfor %}
 {% endif %}
@@ -33,7 +33,7 @@ set incsearch
 set showmatch
 set smartcase
 
-{% if 'Valloric/YouCompleteMe' in vim.plugins %}
+{% if 'Valloric/YouCompleteMe' in vim_plugins %}
   " turn down ycm logging
   let g:ycm_server_log_level = 'warning'
 {% endif %}
@@ -81,7 +81,7 @@ nnoremap <leader>t :TagbarToggle<cr>
 nnoremap <leader>riw yiw:/gc<home>%s/\<<C-r>"\>/
 nnoremap <leader>riW yiW:/gc<home>%s/\<<C-r>"\>/
 
-{% if 'rking.ag.vim' in vim.plugins %}
+{% if 'rking.ag.vim' in vim_plugins %}
   " search
   nnoremap <leader>a :Ag 
 {% endif %}
@@ -112,12 +112,12 @@ call matchadd('ColorColumn', '\%80v', 20)
 if $COLORTERM == 'gnome-terminal'
 set t_Co=256
 set background=dark
-{% if 'vim-scripts/Solarized' in vim.plugins %}
+{% if 'vim-scripts/Solarized' in vim_plugins %}
   colorscheme solarized
 {% endif %}
 endif
 
-{% if 'itchyny/lightline.vim' in vim.plugins %}
+{% if 'itchyny/lightline.vim' in vim_plugins %}
   let g:lightline = {
     \ 'separator': {'left':'➠', 'right':'⇚'},
     \ 'subseparator': {'left':'➟', 'right':'⁕'}}
