@@ -49,10 +49,16 @@
         - tmux.conf
         - xinitrc
 
+    keyboard:
+      symbols_file: /usr/share/X11/xkb/symbols/us
+      gnome_shell_input_sources: "[('xkb', 'us+dvorak')]"
+
   tasks:
   #- include: tasks/clojure.yaml
   - include: tasks/utils.yaml
   #- include: tasks/vim.yaml
+  #- include: tasks/vbox.yaml
+  - include: tasks/keyboard.yaml
 
 # setup
   - name: dnf makecache
