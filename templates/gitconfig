@@ -1,0 +1,38 @@
+[core]
+    editor = vim
+[user]
+    name = Anders Oscarsen
+    email = andersoscarsen@gmail.com
+[color]
+    status = auto
+    diff = auto
+    branch = auto
+    interactive = auto
+[diff]
+    tool = gvimdiff
+[merge]
+    tool = gvimdiff
+[gui]
+    editor = gvim
+[cola]
+    fontdiff = DejaVu Sans Mono,8,-1,5,50,0,0,0,0,0
+    fontui = DejaVu Sans,8,-1,5,50,0,0,0,0,0
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    br = branch
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    type = cat-file -t
+    dump = cat-file -p
+    find = "!git ls-files | egrep -i --color=auto"
+    sync="!git ls-files --full-name \
+          | rsync -vaz --no-r --files-from=- \
+              $(git rev-parse --show-toplevel) \
+              centos.local:$(git rev-parse --show-toplevel)"
+    sync2="!TOPLEVEL=$(git rev-parse --show-toplevel) && \
+           git ls-files --full-name \
+           | rsync -vaz --no-r --files-from=- \
+               $TOPLEVEL centos.local:$TOPLEVEL"
+[grep]
+    extendedRegexp = true

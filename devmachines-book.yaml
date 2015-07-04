@@ -39,10 +39,20 @@
         - vim-scripts/Solarized
         - vim-scripts/Tagbar
 
+    utils:
+      tmux:
+        history_limit: 30000
+        has_xsel: true
+      dotfiles:
+        - bashrc
+        - gitconfig
+        - tmux.conf
+        - xinitrc
+
   tasks:
-  - include: tasks/vim.yaml
-  - include: tasks/clojure.yaml
-  - include: tasks/vbox.yaml
+  #- include: tasks/clojure.yaml
+  - include: tasks/utils.yaml
+  #- include: tasks/vim.yaml
 
 # setup
   - name: dnf makecache
