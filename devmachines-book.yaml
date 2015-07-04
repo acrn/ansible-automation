@@ -3,6 +3,11 @@
 
   vars:
 
+    vbox:
+      guest_additions:
+        version: '4.3.28'
+        url: 'http://download.virtualbox.org/virtualbox/4.3.28/VirtualBox-4.3.28-100309-Linux_amd64.run'
+
     lein:
       script:
         dest: ~/bin/lein
@@ -35,8 +40,9 @@
         - vim-scripts/Tagbar
 
   tasks:
-  - include: tasks/clojure.yaml
   - include: tasks/vim.yaml
+  - include: tasks/clojure.yaml
+  - include: tasks/vbox.yaml
 
 # setup
   - name: dnf makecache

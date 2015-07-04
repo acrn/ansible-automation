@@ -1,0 +1,93 @@
+
+---
+- set_fact:
+    guest_addions_dest="{{'/root/' + vbox.guest_additions.url.rsplit('/',1)[1]}}"
+  tags: vbox
+
+- name: download guest additions
+  get_url: dest="{{guest_addions_dest}}"
+           url="{{vbox.guest_additions.url}}"
+  tags: vbox
+  register: guest_additions_downloaded
+  become: yes
+
+- name: make executable
+  tags: vbox
+  file: path="{{guest_addions_dest}}" state=file mode=0755
+  file:
+    path: "{{guest_addions_dest}}"
+    state: file
+    mode: 0755
+  become: yes
+
+- name: dnf update
+  tags: vbox
+  dnf: name=* state=latest
+  become: yes
+
+- name: restart machine
+  tags: vbox
+  shell: bash -c "sleep 1; shutdown -r now" &
+  async: 0
+  poll: 0
+  become: yes
+
+- name: waiting for server to come back
+  tags: vbox
+  local_action: wait_for host={{ inventory_hostname }}
+                port=22
+                delay=15
+                timeout=300
+                connect_timeout=40
+                state=started
+
+- name: install build dependencies
+  tags: vbox
+  dnf: name={{item}} state=latest
+  become: yes
+  with_items:
+    - gcc
+    - kernel
+    - kernel-devel
+    - kernel-headers
+    - dkms
+    - make
+    - bzip2
+    - perl
+
+- name: restart machine
+  tags: vbox
+  shell: bash -c "sleep 1; shutdown -r now" &
+  async: 0
+  poll: 0
+  become: yes
+
+- name: waiting for server to come back
+  tags: vbox
+  local_action: wait_for host={{ inventory_hostname }}
+                port=22
+                delay=15
+                timeout=300
+                connect_timeout=40
+                state=started
+
+- name: install vbox additions
+  tags: vbox
+  command: "{{guest_addions_dest}}"
+  become: yes
+
+- name: restart machine
+  tags: vbox
+  shell: bash -c "sleep 1; shutdown -r now" &
+  async: 0
+  poll: 0
+  become: yes
+
+- name: waiting for server to come back
+  tags: vbox
+  local_action: wait_for host={{ inventory_hostname }}
+                port=22
+                delay=15
+                timeout=300
+                connect_timeout=40
+                state=started

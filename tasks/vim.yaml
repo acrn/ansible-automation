@@ -34,6 +34,7 @@
        dest="~/dotfiles/vim/bundle/{{item.split('/')[1]}}"
   tags: vim
   with_items: "{{vim.plugins}}"
+  when: "'gmarik/Vundle.vim' not in vim.plugins"
   # TODO: Why is emmet always "changed"?
 
 - name: Vundle PluginUpdate
