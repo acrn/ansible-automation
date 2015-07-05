@@ -1,0 +1,3 @@
+{% if chromebook is defined %}
+keycode 133 = Escape NoSymbol Escape
+{% endif %}

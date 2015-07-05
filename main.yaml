@@ -3,6 +3,10 @@
   roles:
     - vboxguest
 
-- hosts: devmachines
+- hosts: workstations
   roles:
     - common
+
+- hosts: devmachines
+  roles:
+    - development

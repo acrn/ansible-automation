@@ -1,0 +1,27 @@
+---
+chromebook: true
+
+
+# utils
+tmux_conf:
+  history_limit: 1000
+  has_xsel: true
+dotfiles:
+  - bashrc
+  - gitconfig
+  - tmux.conf
+  - xinitrc
+  - Xmodmap
+
+# vim
+vim_plugins:
+  - gmarik/Vundle.vim
+  - godlygeek/tabular
+  - itchyny/lightline.vim
+  - kien/ctrlp.vim
+  - rking/ag.vim
+  - scrooloose/nerdcommenter
+  - tpope/vim-fugitive
+  - tpope/vim-surround
+  - vim-scripts/Solarized
+  - vim-scripts/Tagbar

@@ -10,7 +10,7 @@
 - name: list links in ~
   changed_when: false
   tags: [utils]
-  command: find -maxdepth 1 -type l -print
+  command: find ~ -maxdepth 1 -type l -print
   register: dotlinks
 
   # ansible refuses to overwrite file with link, maybe there's a -f option
@@ -27,8 +27,8 @@
 
 # packages
 - name: install fedora utility packages
-  tags: util
-  dnf: name={{item}} state=latest
+  tags: utils
+  dnf: name={{item}} state=present
   become: yes
   with_items:
     - ansible
@@ -43,12 +43,12 @@
   when: ansible_distribution == "Fedora"
 
 - name: install ubuntu utility packages
-  tags: util
-  apt: name={{item}} state=latest
+  tags: utils
+  apt: name={{item}} state=present
   become: yes
   with_items:
     - ansible
-    - docker.io
+    #- docker.io  #TODO: only skip on chromebooks
     - htop
     - mc
     - nmap

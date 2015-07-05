@@ -41,10 +41,12 @@
   tags: [keyboard]
   register: input_sources
   changed_when: false
+  when: gnome_shell is defined
 
 - name: set gnome shell preference
   command: dbus-launch --exit-with-session gsettings
              set org.gnome.desktop.input-sources sources
              "{{gnome_shell_input_sources}}"
   tags: [keyboard]
-  when: input_sources.stdout|replace(" ", "") != gnome_shell_input_sources|replace(" ", "")
+  when: gnome_shell is defined and
+        input_sources.stdout|replace(" ", "") != gnome_shell_input_sources|replace(" ", "")
