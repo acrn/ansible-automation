@@ -37,16 +37,23 @@
   register: ycm_update
   when: "'Valloric/YouCompleteMe' in vim_plugins"
 
+- name: update vundle
+  git: repo="https://github.com/gmarik/Vundle.vim.git"
+       dest="~/dotfiles/vim/bundle/Vundle.vim"
+  tags: vim
+  when: "'gmarik/Vundle.vim' in vim_plugins"
+
 - name: update plugins
   git: repo="https://github.com/{{item}}.git"
        dest="~/dotfiles/vim/bundle/{{item.split('/')[1]}}"
   tags: vim
   with_items: "{{vim_plugins}}"
+  when: "'gmarik/Vundle.vim' not in vim_plugins"
   # TODO: Why is emmet always "changed"?
 
 - name: Vundle PluginUpdate
   tags: vim
-  command: vim -e +PluginUpdate +qa
+  command: vim -R --cmd "set nocp" +PluginUpdate +qa
   when: "'gmarik/Vundle.vim' in vim_plugins"
 
 - name: install fedora ycm build dependencies
