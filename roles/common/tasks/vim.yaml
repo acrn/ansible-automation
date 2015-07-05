@@ -47,7 +47,7 @@
   git: repo="https://github.com/{{item}}.git"
        dest="~/dotfiles/vim/bundle/{{item.split('/')[1]}}"
   tags: vim
-  with_items: "{{vim_plugins}}"
+  with_items: "{{vim_plugins|difference('Valloric/YouCompleteMe')}}"
   when: "'gmarik/Vundle.vim' not in vim_plugins"
   # TODO: Why is emmet always "changed"?
 
