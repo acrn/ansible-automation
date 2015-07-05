@@ -30,6 +30,12 @@
   when: not grep.stdout
   become: yes
 
+- name: remove compiled layouts
+  command: find /var/lib/xkb -name "*.xkm" -delete
+  when: not grep.stdout
+  changed_when: false
+  become: yes
+
 - name: check gnome shell prefernce
   command: gsettings get org.gnome.desktop.input-sources sources
   tags: [keyboard]

@@ -1,19 +1,31 @@
 ---
 # versioning
-- name: install versioning packages
+- name: install fedora versioning packages
   tags: versioning
   dnf: name={{item}} state=latest
   become: yes
+  when: ansible_distribution == "Fedora"
+  with_items:
+    - git-svn
+    - mercurial
+    - tig
+
+- name: install ubuntu versioning packages
+  tags: versioning
+  apt: name={{item}} state=latest
+  become: yes
+  when: ansible_distribution == "Ubuntu"
   with_items:
     - git-svn
     - mercurial
     - tig
 
 # python
-- name: install python packages
+- name: install fedora python packages
   tags: python
   dnf: name={{item}} state=latest
   become: yes
+  when: ansible_distribution == "Fedora"
   with_items:
     - python-devel
     - python-ipython
@@ -21,21 +33,53 @@
     - python3-ipython
     - python3-virtualenv
 
+- name: install ubuntu python packages
+  tags: python
+  apt: name={{item}} state=latest
+  become: yes
+  when: ansible_distribution == "Ubuntu"
+  with_items:
+    - python-dev
+    - ipython
+    - python-virtualenv
+    - ipython3
+    - python3-virtualenv
+
 # c
-- name: install c packages
+- name: install fedora c packages
   tags: c
   dnf: name={{item}} state=latest
   become: yes
+  when: ansible_distribution == "Fedora"
   with_items:
     - clang
     - gcc
     - gcc-c++
     - kernel-devel
 
+- name: install ubuntu c packages
+  tags: c
+  apt: name={{item}} state=latest
+  become: yes
+  when: ansible_distribution == "Ubuntu"
+  with_items:
+    - clang
+    - gcc
+    - linux-headers-generic
+
 # go
-- name: install go packages
+- name: install fedora go packages
   tags: go
   dnf: name={{item}} state=latest
   become: yes
+  when: ansible_distribution == "Fedora"
+  with_items:
+    - golang
+
+- name: install ubuntu go packages
+  tags: go
+  apt: name={{item}} state=latest
+  become: yes
+  when: ansible_distribution == "Ubuntu"
   with_items:
     - golang

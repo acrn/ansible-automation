@@ -1,9 +1,4 @@
 ---
-vbox:
-  guest_additions:
-    version: '4.3.28'
-    url: 'http://download.virtualbox.org/virtualbox/4.3.28/VBoxGuestAdditions_4.3.28.iso'
-
 lein:
   script:
     dest: ~/bin/lein
@@ -16,8 +11,12 @@ lein:
 
 # vim
 vim_packages:
-  - vim-X11
-  - vim-enhanced
+  fedora:
+    - vim-X11
+    - vim-enhanced
+  ubuntu:
+    - vim-gnome
+
 vim_plugins:
   #- faith/vim-go   keeps asking for github password
   #- gmarik/Vundle.vim

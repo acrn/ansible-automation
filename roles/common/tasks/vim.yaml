@@ -6,11 +6,19 @@
 - file: src=~/dotfiles/vim dest=~/.vim state=link
   tags: vim
 
-- name: install vim packages
+- name: install fedora vim packages
   tags: vim
   dnf: name={{item}} state=latest
   become: yes
-  with_items: "{{vim_packages}}"
+  with_items: vim_packages.fedora
+  when: ansible_distribution == "Fedora"
+
+- name: install ubuntu vim packages
+  tags: vim
+  apt: name={{item}} state=latest
+  become: yes
+  with_items: vim_packages.ubuntu
+  when: ansible_distribution == "Ubuntu"
 
 - name: vimrc
   tags:
@@ -41,7 +49,7 @@
   command: vim -e +PluginUpdate +qa
   when: "'gmarik/Vundle.vim' in vim_plugins"
 
-- name: install ycm build dependencies  
+- name: install fedora ycm build dependencies
   tags: vim
   dnf: name={{item}} state=latest
   become: yes
@@ -50,12 +58,25 @@
     - gcc
     - gcc-c++
     - python-devel
-  when: "'Valloric/YouCompleteMe' in vim_plugins and ycm_update.changed"
-  # TODO: what are they?
+  when: ansible_distribution == "Fedora"
+        and 'Valloric/YouCompleteMe' in vim_plugins
+        and ycm_update.changed
+
+- name: install ubuntu ycm build dependencies
+  tags: vim
+  apt: name={{item}} state=latest
+  become: yes
+  with_items:
+    - cmake
+    - gcc
+    - python-dev
+  when: ansible_distribution == "Ubuntu"
+        and 'Valloric/YouCompleteMe' in vim_plugins
+        and ycm_update.changed
 
 - name: compile YouCompleteMe
   tags: vim
   command: "./install.sh"  #yolo, this is all highly insucure anyway
   args:
     chdir: "~/dotfiles/vim/bundle/YouCompleteMe"
-  when: "'Valloric/YouCompleteMe' in vim_plugins and ycm_update.changed"
+  when: ycm_update.changed and 'Valloric/YouCompleteMe' in vim_plugins

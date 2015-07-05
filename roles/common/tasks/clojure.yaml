@@ -36,10 +36,20 @@
   stat: path="{{lein.standalone.dest}}"
   register: stat_lein_standalone
 
-- name: install leiningen
+- name: install a jre
+  apt: name={{item}} state=latest
+  when: ansible_distribution == "Ubuntu"
+  become: yes
   tags: clojure
-  when: stat_lein_standalone.stat.exists == false
-  command: "{{lein.script.dest}}"
+  with_items:
+    - openjdk-8-jre
+    - ca-certificates-java
+
+- name: update certificates
+  command: sudo update-ca-certificates -f
+  become: yes
+  when: ansible_distribution == "Ubuntu"
+        and not stat_lein_standalone.stat.exists
 
 - stat: path="{{lein.standalone.dest}}"
   tags: clojure

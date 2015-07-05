@@ -25,8 +25,8 @@
   tags: [utils]
   with_items: dotfiles
 
-# util
-- name: install utility packages
+# packages
+- name: install fedora utility packages
   tags: util
   dnf: name={{item}} state=latest
   become: yes
@@ -39,3 +39,20 @@
     - npm
     - pwsafe
     - tmux
+    - xsel
+  when: ansible_distribution == "Fedora"
+
+- name: install ubuntu utility packages
+  tags: util
+  apt: name={{item}} state=latest
+  become: yes
+  with_items:
+    - ansible
+    - docker.io
+    - htop
+    - mc
+    - nmap
+    - npm
+    - tmux
+    - xsel
+  when: ansible_distribution == "Ubuntu"

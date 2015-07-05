@@ -1,0 +1,159 @@
+
+---
+- name: check for vboxguest
+  command: modinfo vboxguest
+  register: modinfo_vboxguest
+  become: yes
+  changed_when: false
+
+- name: dnf update
+  tags: [vbox]
+  dnf: name=kernel state=latest
+  become: yes
+  register: update_kernel
+  when: ansible_distribution == "Fedora" and
+        vbox.guest_additions.version not in modinfo_vboxguest.stdout
+
+- name: apt update
+  tags: [vbox]
+  apt: name=linux-image-generic state=latest
+  become: yes
+  register: update_kernel
+  when: ansible_distribution == "Ubuntu" and
+        vbox.guest_additions.version not in modinfo_vboxguest.stdout
+
+- name: restart machine
+  tags: [vbox]
+  shell: bash -c "/bin/sleep 1; /sbin/shutdown -r now" &
+  async: 0
+  poll: 0
+  become: yes
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout and
+        update_kernel.changed
+
+- name: waiting for server to come back
+  tags: [vbox]
+  local_action: wait_for host={{ inventory_hostname }}
+                port=22
+                delay=15
+                timeout=300
+                connect_timeout=40
+                state=started
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout and
+        update_kernel.changed
+
+- name: install build dependencies
+  tags: [vbox]
+  dnf: name={{item}} state=latest
+  become: yes
+  register: update_build_deps
+  when: ansible_distribution == "Fedora" and
+        vbox.guest_additions.version not in modinfo_vboxguest.stdout
+  with_items:
+    - gcc
+    - kernel
+    - kernel-devel
+    - kernel-headers
+    - dkms
+    - make
+    - bzip2
+    - perl
+
+- name: install build dependencies
+  tags: [vbox]
+  apt: name={{item}} state=latest
+  become: yes
+  register: update_build_deps
+  when: ansible_distribution == "Ubuntu" and
+        vbox.guest_additions.version not in modinfo_vboxguest.stdout
+  with_items:
+    - gcc
+    - linux-image-generic
+    - linux-headers-generic
+    - dkms
+    - make
+    - bzip2
+    - perl
+
+- name: restart machine
+  tags: [vbox]
+  shell: bash -c "/bin/sleep 1; /sbin/shutdown -r now" &
+  async: 0
+  poll: 0
+  become: yes
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout and
+        update_build_deps.changed
+
+- name: waiting for server to come back
+  tags: [vbox]
+  local_action: wait_for host={{ inventory_hostname }}
+                port=22
+                delay=15
+                timeout=300
+                connect_timeout=40
+                state=started
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout and
+        update_build_deps.changed
+
+- name: make temp folder for guest additions iso
+  command: mktemp -d
+  register: iso_dir
+  tags: [vbox]
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout
+
+- set_fact:
+    guest_addions_dest="{{iso_dir.stdout + '/' + vbox.guest_additions.url.rsplit('/',1)[1]}}"
+  tags: [vbox]
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout
+
+- name: download guest additions
+  get_url: dest="{{guest_addions_dest}}"
+           url="{{vbox.guest_additions.url}}"
+  tags: [vbox]
+  register: guest_additions_downloaded
+  become: yes
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout
+
+- name: make temp folder for mounting iso
+  command: mktemp -d
+  register: mnt_dir
+  tags: [vbox]
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout
+
+- name: mount iso
+  command: mount -t iso9660 -o loop {{guest_addions_dest}} {{mnt_dir.stdout}}
+  become: yes
+  tags: [vbox]
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout
+
+- name: install vbox additions
+  tags: [vbox]
+  command: "{{mnt_dir.stdout + '/' + 'VBoxLinuxAdditions.run'}}"
+  become: yes
+  # always returns 1 :(
+  ignore_errors: yes
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout
+
+- name: unmount iso
+  command: umount {{mnt_dir.stdout}}
+  become: yes
+  tags: [vbox]
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout
+
+- name: restart machine
+  tags: [vbox]
+  shell: bash -c "/bin/sleep 1; /sbin/shutdown -r now" &
+  async: 0
+  poll: 0
+  become: yes
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout
+
+- name: waiting for server to come back
+  tags: [vbox]
+  when: vbox.guest_additions.version not in modinfo_vboxguest.stdout
+  local_action: wait_for host={{ inventory_hostname }}
+                port=22
+                delay=15
+                timeout=300
+                connect_timeout=40
+                state=started

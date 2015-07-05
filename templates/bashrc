@@ -58,7 +58,11 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
+{% if ansible_distribution == 'Fedora' %}
     source /usr/share/git-core/contrib/completion/git-prompt.sh
+{% elif ansible_distribution == 'Ubuntu' %}
+    source /etc/bash_completion.d/git-prompt
+{% endif %}
     PS1='\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[02;33m\]$(__git_ps1)\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
