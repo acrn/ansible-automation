@@ -1,5 +1,8 @@
 ---
+- hosts: vboxguests
+  roles:
+    - vboxguest
+
 - hosts: devmachines
   roles:
-    - vbox
     - common
