@@ -109,12 +109,12 @@ autocmd BufRead,BufNewFile *.html,*.js,*.css,*.scss,*.yaml
 " highlight lines that are 80+ chars
 call matchadd('ColorColumn', '\%80v', 20)
 
-if $COLORTERM == 'gnome-terminal'
-set t_Co=256
-set background=dark
-{% if 'vim-scripts/Solarized' in vim_plugins %}
-  colorscheme solarized
-{% endif %}
+if $TERM =~ '256'
+  set t_Co=256
+  set background=dark
+  {% if 'vim-scripts/Solarized' in vim_plugins %}
+    colorscheme solarized
+  {% endif %}
 endif
 
 {% if 'itchyny/lightline.vim' in vim_plugins %}
