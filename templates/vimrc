@@ -4,21 +4,27 @@ set encoding=utf-8
 set nocompatible
 filetype off
 
+" performance
+set lazyredraw
+{% if chromebook is not defined %}
+  set ttyfast
+{% endif %}
+
 {% if 'gmarik/Vundle.vim' in vim_plugins %}
   " vundle
   set rtp+=~/.vim/bundle/Vundle.vim
   call vundle#begin()
   {% for plugin in vim_plugins %}
-     Plugin '{{ plugin }}'
+    Plugin '{{ plugin }}'
   {% endfor %}
   call vundle#end()
 {% else %}
   set rtp+=
   {% for plugin in vim_plugins %}
-      \~/.vim/bundle/{{ plugin|regex_replace('.*/', '') }},
+    \~/.vim/bundle/{{ plugin|regex_replace('.*/', '') }},
   {% endfor %}
   {% for plugin in vim_plugins %}
-      \~/.vim/bundle/{{ plugin|regex_replace('.*/', '') }}/after,
+    \~/.vim/bundle/{{ plugin|regex_replace('.*/', '') }}/after,
   {% endfor %}
 {% endif %}
 
@@ -65,7 +71,15 @@ syntax on
 syntax enable
 
 " remaps
-nnoremap <C-v> <C-w>
+{% if chromebook is defined %}
+  " <C-v> closes chrome tab
+  nnoremap <C-v> <C-w>
+  {% if 'kien/ctrlp.vim' in vim_plugins %}
+    " Don't have a proper F5
+    nnoremap <leader>r :CtrlPClearAllCaches<cr>
+  {% endif %}
+{% endif %}
+
 nnoremap <C-k> 10k
 nnoremap <C-j> 10j
 nnoremap <esc> :
@@ -97,9 +111,6 @@ set tags=./tags;$HOME
 
 " autocommands
 au VimResized * exe "normal! \<c-w>="
-
-autocmd BufRead *.vala,*.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
-au BufRead,BufNewFile *.vala,*.vapi setfiletype vala
 
 autocmd BufRead,BufNewFile *.html,*.js,*.css,*.scss,*.yaml
     \ setl shiftwidth=2 tabstop=2 softtabstop=2
