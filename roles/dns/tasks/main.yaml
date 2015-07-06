@@ -1,0 +1,88 @@
+---
+- name: install bind
+  tags: dns
+  dnf: name=bind state=latest
+  when: false
+
+- name: named.conf
+  tags: dns
+  template:
+    src: named.conf
+    dest: /etc/named.conf
+    owner: root
+    group: named
+    mode: 0640
+  become: yes
+  register: named_conf
+
+- name: zone config file
+  tags: dns
+  template:
+    src: zone.conf
+    dest: /etc/named/{{ dns_domain }}.conf
+    owner: root
+    group: named
+    mode: 0640
+  become: yes
+  register: zone_config_template
+
+- name: zone dir
+  tags: dns
+  file:
+    path: "{{ dns_zone_dir }}"
+    state: directory
+    owner: named
+    group: named
+    mode: 0770
+  become: yes
+
+- name: zone file
+  tags: dns
+  template:
+    src: zone
+    dest: "{{ dns_zone_dir }}/{{ dns_domain }}"
+    owner: root
+    group: named
+    mode: 0640
+  become: yes
+  register: zone_template
+
+- name: get default firewall zone
+  tags: dns
+  command: firewall-cmd --get-default-zone
+  register: firewall_default_zone
+  changed_when: false
+  ignore_errors: yes
+
+- debug: msg="You should probably check on the firewall..."
+  tags: dns
+  when: firewall_default_zone|failed
+
+- name: port needs opening
+  tags: dns
+  command: firewall-cmd --zone={{ firewall_default_zone.stdout }} --list-ports
+  register: firewall_open_ports
+  changed_when: "'53/udp' not in '{{ firewall_open_ports.stdout }}'"
+  when: not firewall_default_zone|failed
+  become: yes
+
+- name: open port
+  tags: dns
+  command: firewall-cmd --zone={{ firewall_default_zone.stdout }}
+           --add-port=53/udp --permanent
+  when: firewall_open_ports|changed
+  become: yes
+
+- name: reload firewall
+  tags: dns
+  service: name=firewalld state=restarted  # "reloaded" leaves it off???
+  when: firewall_open_ports|changed
+  become: yes
+
+- name: reload named
+  tags: dns
+  service: name=named state=reloaded
+  when: named_conf|changed
+        or zone_config_template|changed
+        or zone_template|changed
+  become: yes

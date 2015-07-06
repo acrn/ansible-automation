@@ -10,3 +10,7 @@
 - hosts: devmachines
   roles:
     - development
+
+- hosts: dnsservers
+  roles:
+    - dns
