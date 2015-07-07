@@ -30,9 +30,5 @@
           | rsync -vaz --no-r --files-from=- \
               $(git rev-parse --show-toplevel) \
               centos.local:$(git rev-parse --show-toplevel)"
-    sync2="!TOPLEVEL=$(git rev-parse --show-toplevel) && \
-           git ls-files --full-name \
-           | rsync -vaz --no-r --files-from=- \
-               $TOPLEVEL centos.local:$TOPLEVEL"
 [grep]
     extendedRegexp = true
