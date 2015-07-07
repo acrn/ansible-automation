@@ -13,6 +13,9 @@ dns_acl:
 dns_zone_dir: /etc/named/zones
 dns_domain: alkali
 dns_a_records:
+  192.168.1.1:
+    - router
+    - siebnes
   192.168.1.8:
     - iphone
   192.168.1.21:
