@@ -1,0 +1,4 @@
+---
+gitserver_user: git
+gitserver_group: git
+gitserver_home: /var/git

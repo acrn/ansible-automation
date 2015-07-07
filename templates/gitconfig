@@ -17,6 +17,8 @@
 [cola]
     fontdiff = DejaVu Sans Mono,8,-1,5,50,0,0,0,0,0
     fontui = DejaVu Sans,8,-1,5,50,0,0,0,0,0
+[push]
+    default = simple
 [alias]
     co = checkout
     ci = commit
@@ -26,6 +28,7 @@
     type = cat-file -t
     dump = cat-file -p
     find = "!git ls-files | egrep -i --color=auto"
+    remote-init = !ssh git@git.alkali git init --bare --quiet
     sync="!git ls-files --full-name \
           | rsync -vaz --no-r --files-from=- \
               $(git rev-parse --show-toplevel) \

@@ -14,3 +14,7 @@
 - hosts: dnsservers
   roles:
     - dns
+
+- hosts: gitservers
+  roles:
+    - gitserver

@@ -1,0 +1,38 @@
+---
+- name: install git
+  tags: gitserver
+  pacman: name=git state=latest  # TODO: other packet managers
+  become: yes
+
+- name: create git group
+  tags: gitserver
+  group: name={{ gitserver_group }} system=yes
+  become: yes
+
+- name: create git user
+  tags: gitserver
+  user:
+    name: "{{ gitserver_user }}"
+    group: "{{ gitserver_group }}"
+    system: yes
+    generate_ssh_key: yes
+    home: "{{ gitserver_home }}"
+  become: yes
+
+- name: touch authorized_keys
+  tags: gitserver
+  file:
+    name: "{{ gitserver_home }}/.ssh/authorized_keys"
+    mode: 0600
+  become: yes
+  become_user: git
+  changed_when: false
+
+# git init one or more bare repos on the server
+- name: init repos
+  tags: gitserver
+  command: git -C /var/git init --bare {{ item }}
+  become: yes
+  become_user: git
+  when: init_repos is defined
+  with_items: init_repos.split(',')
