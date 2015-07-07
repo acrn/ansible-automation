@@ -11,11 +11,19 @@ dns_acl:
   matches:
     - localnets
 dns_zone_dir: /etc/named/zones
-dns_domain: test.main
+dns_domain: alkali
 dns_a_records:
+  192.168.1.8:
+    - iphone
+  192.168.1.21:
+    - iridium
   192.168.1.67:
-   - host1
-   - host2
-  192.168.1.167:
-   - host3
-   - host4
+    - bismuth
+  192.168.1.91:
+    - chrome
+  192.168.1.187:
+    - cerium
+  192.168.1.191:
+    - oxygen
+  192.168.1.223:
+    - helium

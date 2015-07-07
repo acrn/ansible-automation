@@ -1,17 +1,17 @@
 ; {{ ansible_managed }}
 $TTL 1D
-@	IN SOA	ns1.{{ dns_domain }}. admin.{{ dns_domain }}. (
-					4	; serial
-					1D	; refresh
-					1H	; retry
-					1W	; expire
-					3H )	; minimum
+@	IN SOA	{{ inventory_hostname }}.{{ dns_domain }}. admin.{{ dns_domain }}. (
+					4     ; serial
+					1D    ; refresh
+					1H    ; retry
+					1W    ; expire
+					3H )  ; minimum
 
 ; name servers - NS records
-	IN	NS	ns1.{{ dns_domain }}.
+	IN	NS	{{ inventory_hostname }}.{{ dns_domain }}.
 
 ; name servers - A records
-ns1.{{ dns_domain }}.	IN	A	192.168.1.67
+{{ inventory_hostname }}.{{ dns_domain }}.	IN	A	{{ internal_ip }}
 
 ; 10.128.0.0/16 - A records
 {% for ip, hostnames in dns_a_records.items() %}

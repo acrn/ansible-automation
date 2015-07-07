@@ -1,8 +1,16 @@
 ---
-- name: install bind
+- name: install fedora bind
   tags: dns
   dnf: name=bind state=latest
-  when: false
+  when: ansible_distribution == "Fedora"
+
+- name: install arch bind
+  tags: dns
+  pacman: name=bind state=latest
+  when: ansible_distribution == "Archlinux"
+
+- debug: msg={{ ansible_distribution }}
+  tags: dns
 
 - name: named.conf
   tags: dns
@@ -14,6 +22,16 @@
     mode: 0640
   become: yes
   register: named_conf
+
+- name: named dir
+  tags: dns
+  file:
+    path: /etc/named
+    state: directory
+    owner: root
+    group: named
+    mode: 0750
+  become: yes
 
 - name: zone config file
   tags: dns
@@ -30,6 +48,16 @@
   tags: dns
   file:
     path: "{{ dns_zone_dir }}"
+    state: directory
+    owner: named
+    group: named
+    mode: 0770
+  become: yes
+
+- name: zone dir
+  tags: dns
+  file:
+    path: /var/named/data
     state: directory
     owner: named
     group: named
@@ -81,7 +109,7 @@
 
 - name: reload named
   tags: dns
-  service: name=named state=reloaded
+  service: name=named state=reloaded enabled=yes
   when: named_conf|changed
         or zone_config_template|changed
         or zone_template|changed
