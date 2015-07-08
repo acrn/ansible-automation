@@ -1,0 +1,23 @@
+[vboxguests]
+bismuth ansible_ssh_host=bismuth.alkali
+cerium ansible_ssh_host=cerium.alkali
+
+[chromebooks]
+chrome ansible_connection=local
+
+[raspberrypis]
+helium ansible_ssh_host=helium.alkali ansible_python_interpreter=/usr/bin/python2
+
+[gitservers]
+git ansible_ssh_host=git.alkali ansible_python_interpreter=/usr/bin/python2
+
+[devmachines]
+bismuth
+cerium
+
+[dnsservers]
+helium
+
+[workstations:children]
+devmachines
+chromebooks
