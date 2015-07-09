@@ -19,6 +19,14 @@
     home: "{{ gitserver_home }}"
   become: yes
 
+- name: gitconfig
+  tags: gitserver
+  template:
+    src: gitconfig
+    dest: "{{ gitserver_home }}/.gitconfig"
+  become: yes
+  become_user: git
+
 - name: touch authorized_keys
   tags: gitserver
   file:
@@ -36,3 +44,21 @@
   become_user: git
   when: init_repos is defined
   with_items: init_repos.split(',')
+
+- name: create backup directory
+  tags: gitserver
+  file:
+    path: "{{ gitserver_backup_dir }}"
+    state: directory
+    owner: "{{ gitserver_user }}"
+    group: "{{ gitserver_group }}"
+  become: yes
+
+- name: backup script
+  tags: gitserver
+  template:
+    src: backup.sh
+    dest: "{{ gitserver_backup_dir }}/backup.sh"
+    mode: 0755
+  become: yes
+  become_user: git

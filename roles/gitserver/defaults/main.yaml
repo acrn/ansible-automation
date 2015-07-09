@@ -1,4 +1,8 @@
 ---
 gitserver_user: git
 gitserver_group: git
+gitserver_email: git@git.alkali
 gitserver_home: /var/git
+gitserver_backup_dir: /var/git-backup
+gitserver_backup_remotes:
+  - bismuth git@bismuth.alkali:git-backup
