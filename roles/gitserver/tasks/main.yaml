@@ -62,3 +62,25 @@
     mode: 0755
   become: yes
   become_user: git
+
+- name: systemd service
+  tags: gitserver
+  template:
+    src: backup.systemd.service
+    dest: /etc/systemd/system/git-backup.service
+  become: yes
+  register: systemd_service
+
+- name: systemd timer
+  tags: gitserver
+  template:
+    src: backup.systemd.timer
+    dest: /etc/systemd/system/git-backup.timer
+  become: yes
+  register: systemd_timer
+
+- name: enable and start timer
+  tags: gitserver
+  # started will have to do, restarted doesn't do daemon-reload anyway
+  service: name=git-backup.timer state=started enabled=yes
+  become: yes

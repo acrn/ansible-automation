@@ -6,3 +6,4 @@ gitserver_home: /var/git
 gitserver_backup_dir: /var/git-backup
 gitserver_backup_remotes:
   - bismuth git@bismuth.alkali:git-backup
+gitserver_backup_oncalendar: "*-*-* 04:45:00"

@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup git repositories
+
+[Timer]
+OnCalendar={{ gitserver_backup_oncalendar }}
+Unit=git-backup.service
+
+[Install]
+WantedBy=timers.target
