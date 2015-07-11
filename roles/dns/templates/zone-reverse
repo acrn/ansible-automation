@@ -10,12 +10,13 @@ $TTL 1D
 ; name servers - NS records
 	IN	NS	{{ inventory_hostname }}.{{ dns_domain }}.
 
-; name servers - A records
-{{ inventory_hostname }}.{{ dns_domain }}.	IN	A	{{ internal_ip }}
-
-; A records
+; PTR records
 {% for ip, hostnames in dns_a_records.items() %}
 {% for hostname in hostnames %}
-{{ hostname }}.{{ dns_domain }}.	IN	A	{{ ip }}
+{{ ip.split('.')
+   |reverse
+   |slice(2)
+   |first
+   |join('.') }}	IN	PTR	{{ hostname }}.{{ dns_domain }}.
 {% endfor %}
 {% endfor %}

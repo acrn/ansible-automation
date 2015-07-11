@@ -9,9 +9,6 @@
   pacman: name=bind state=latest
   when: ansible_distribution == "Archlinux"
 
-- debug: msg={{ ansible_distribution }}
-  tags: dns
-
 - name: named.conf
   tags: dns
   template:
@@ -54,16 +51,6 @@
     mode: 0770
   become: yes
 
-- name: zone dir
-  tags: dns
-  file:
-    path: /var/named/data
-    state: directory
-    owner: named
-    group: named
-    mode: 0770
-  become: yes
-
 - name: zone file
   tags: dns
   template:
@@ -74,6 +61,17 @@
     mode: 0640
   become: yes
   register: zone_template
+
+- name: reverse zone file
+  tags: dns
+  template:
+    src: zone-reverse
+    dest: "{{ dns_zone_dir }}/{{ dns_domain }}-reverse"
+    owner: root
+    group: named
+    mode: 0640
+  become: yes
+  register: zone_reverse_template
 
 - name: get default firewall zone
   tags: dns
@@ -113,4 +111,5 @@
   when: named_conf|changed
         or zone_config_template|changed
         or zone_template|changed
+        or zone_reverse_template|changed
   become: yes
