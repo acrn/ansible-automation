@@ -1,9 +1,0 @@
----
-- hosts: all
-
-  tasks:
-    - name: .ssh folder
-      file: path=~/.ssh mode=0700 state=directory
-
-    - name: authorized key
-      copy: src=~/.ssh/id_rsa.pub dest=~/.ssh/authorized_keys mode=0644
