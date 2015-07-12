@@ -24,11 +24,11 @@
   tags:
     - vim
     - vimrc
-  template: src="templates/vimrc" dest="~/dotfiles/vim/vimrc"
+  template: src="vimrc" dest="~/dotfiles/vim/vimrc"
 
 - name: gvimrc
   tags: vim
-  template: src="templates/gvimrc" dest="~/dotfiles/vim/gvimrc"
+  template: src="gvimrc" dest="~/dotfiles/vim/gvimrc"
 
 - name: update ycm
   git: repo="https://github.com/Valloric/YouCompleteMe.git"

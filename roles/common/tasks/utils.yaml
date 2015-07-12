@@ -4,7 +4,7 @@
 
 - name: render dotfile templates
   tags: [utils]
-  template: src="templates/{{item}}" dest="~/dotfiles/{{item}}"
+  template: src="{{item}}" dest="~/dotfiles/{{item}}"
   with_items: dotfiles
 
 - name: list links in ~
