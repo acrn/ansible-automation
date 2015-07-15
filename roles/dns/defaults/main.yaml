@@ -24,6 +24,8 @@ dns_a_records:
     - bismuth
   192.168.1.91:
     - chrome
+  192.168.1.142:
+    - cobalt
   192.168.1.187:
     - cerium
   192.168.1.191:
