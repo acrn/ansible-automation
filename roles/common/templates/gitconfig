@@ -35,3 +35,6 @@
               centos.local:$(git rev-parse --show-toplevel)"
 [grep]
     extendedRegexp = true
+    lineNumber = true
+[credential]
+    helper = cache --timeout=86400
