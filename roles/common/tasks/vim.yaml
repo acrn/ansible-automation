@@ -43,19 +43,6 @@
   tags: vim
   when: "'gmarik/Vundle.vim' in vim_plugins"
 
-- name: update plugins
-  git: repo="https://github.com/{{item}}.git"
-       dest="~/dotfiles/vim/bundle/{{item.split('/')[1]}}"
-  tags: vim
-  with_items: "{{vim_plugins|difference('Valloric/YouCompleteMe')}}"
-  when: "'gmarik/Vundle.vim' not in vim_plugins"
-  # TODO: Why is emmet always "changed"?
-
-- name: Vundle PluginUpdate
-  tags: vim
-  command: vim -R --cmd "set nocp" +PluginUpdate +qa
-  when: "'gmarik/Vundle.vim' in vim_plugins"
-
 - name: install fedora ycm build dependencies
   tags: vim
   dnf: name={{item}} state=latest
@@ -87,3 +74,16 @@
   args:
     chdir: "~/dotfiles/vim/bundle/YouCompleteMe"
   when: ycm_update.changed and 'Valloric/YouCompleteMe' in vim_plugins
+
+- name: update plugins
+  git: repo="https://github.com/{{item}}.git"
+       dest="~/dotfiles/vim/bundle/{{item.split('/')[1]}}"
+  tags: vim
+  with_items: "{{vim_plugins|difference('Valloric/YouCompleteMe')}}"
+  when: "'gmarik/Vundle.vim' not in vim_plugins"
+  # TODO: Why is emmet always "changed"?
+
+- name: Vundle PluginUpdate
+  tags: vim
+  command: vim -R --cmd "set nocp" +PluginUpdate +qa
+  when: "'gmarik/Vundle.vim' in vim_plugins"

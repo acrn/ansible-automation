@@ -15,6 +15,7 @@ dotfiles:
 
 # vim
 vim_plugins:
+  - Valloric/YouCompleteMe
   - gmarik/Vundle.vim
   - godlygeek/tabular
   - itchyny/lightline.vim
