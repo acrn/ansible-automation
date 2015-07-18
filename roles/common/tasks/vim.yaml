@@ -3,6 +3,8 @@
   tags: vim
 - file: path=~/dotfiles/vim/tmp state=directory mode=0755
   tags: vim
+- file: path=~/dotfiles/vim/colors state=directory mode=0755
+  tags: vim
 - file: src=~/dotfiles/vim dest=~/.vim state=link
   tags: vim
 
@@ -29,6 +31,11 @@
 - name: gvimrc
   tags: vim
   template: src="gvimrc" dest="~/dotfiles/vim/gvimrc"
+
+- name: Install colorschemes
+  tags: vim
+  get_url: url="{{ item }}" dest=~/dotfiles/vim/colors
+  with_items: "{{ vim_colorschemes }}"
 
 - name: update ycm
   git: repo="https://github.com/Valloric/YouCompleteMe.git"

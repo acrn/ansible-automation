@@ -15,8 +15,12 @@ vim_plugins:
   - kien/ctrlp.vim
   - rking/ag.vim
   - tpope/vim-fugitive
-  - vim-scripts/Solarized
   - vim-scripts/Tagbar
+
+vim_colorschemes:
+  - https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
+  - https://raw.githubusercontent.com/lyxell/pride.vim/master/colors/pride.vim
+  - https://raw.githubusercontent.com/nielsmadan/harlequin/master/colors/harlequin.vim
 
 # bash
 bash_histsize: 500

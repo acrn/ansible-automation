@@ -2,4 +2,8 @@ set gfn=Liberation\ Mono\ 10
 set guioptions-=m "-=mT doesn't work?
 set guioptions-=T
 set lines=60
-colorscheme solarized
+{% if 'https://raw.githubusercontent.com/altercation/vim-colors-solarized/'
+    'master/colors/solarized.vim' in vim_colorschemes %}
+  set background=dark
+  colorscheme solarized
+{% endif %}

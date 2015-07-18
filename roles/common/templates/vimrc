@@ -123,14 +123,15 @@ call matchadd('ColorColumn', '\%80v', 20)
 if $TERM =~ '256'
   set t_Co=256
   set background=dark
-  {% if 'vim-scripts/Solarized' in vim_plugins %}
+  {% if 'https://raw.githubusercontent.com/altercation/vim-colors-solarized/'
+        'master/colors/solarized.vim' in vim_colorschemes %}
     colorscheme solarized
   {% endif %}
 endif
 
 {% if 'itchyny/lightline.vim' in vim_plugins %}
   let g:lightline = {
-    \ 'separator': {'left':'➠', 'right':'⇚'},
-    \ 'subseparator': {'left':'➟', 'right':'⁕'}}
+    \ 'separator': {'left':'', 'right':''},
+    \ 'subseparator': {'left':'', 'right':'⁕'}}
   set listchars=tab:▸⋅,eol:¬,trail:⋅
 {% endif %}

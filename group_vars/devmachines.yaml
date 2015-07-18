@@ -23,7 +23,6 @@ vim_plugins:
   - tpope/vim-fugitive
   - tpope/vim-surround
   - Valloric/YouCompleteMe
-  - vim-scripts/Solarized
   - vim-scripts/Tagbar
 
 gnome_shell: true

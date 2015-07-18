@@ -24,5 +24,4 @@ vim_plugins:
   - scrooloose/nerdcommenter
   - tpope/vim-fugitive
   - tpope/vim-surround
-  - vim-scripts/Solarized
   - vim-scripts/Tagbar
