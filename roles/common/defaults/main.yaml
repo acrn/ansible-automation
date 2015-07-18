@@ -30,6 +30,7 @@ bash_histsizefile: 5000
 tmux_conf:
   history_limit: 30000
   has_xsel: true
+  has_firefox: true
 dotfiles:
   - bashrc
   - gitconfig

@@ -1,11 +1,11 @@
 ---
 chromebook: true
 
-
 # utils
 tmux_conf:
   history_limit: 1000
   has_xsel: true
+  has_firefox: false
 dotfiles:
   - bashrc
   - gitconfig
