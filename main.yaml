@@ -1,4 +1,7 @@
 ---
+- hosts: dnsservers
+  roles:
+    - dns
 - hosts: vboxguests
   roles:
     - vboxguest
@@ -10,10 +13,6 @@
 - hosts: devmachines
   roles:
     - development
-
-- hosts: dnsservers
-  roles:
-    - dns
 
 - hosts: gitservers
   roles:

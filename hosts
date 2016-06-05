@@ -16,7 +16,7 @@ bismuth
 cerium
 
 [dnsservers]
-helium
+dns ansible_ssh_host=192.168.1.223 ansible_python_interpreter=/usr/bin/python2
 
 [workstations:children]
 devmachines
