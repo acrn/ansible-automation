@@ -5,7 +5,7 @@
 - name: render dotfile templates
   tags: [utils]
   template: src="{{item}}" dest="~/dotfiles/{{item}}"
-  with_items: dotfiles
+  with_items: "{{dotfiles}}"
 
 - name: list links in ~
   changed_when: false
@@ -18,12 +18,12 @@
   tags: [utils]
   file: dest=~/.{{item}} state=absent
   when: item not in dotlinks.stdout
-  with_items: dotfiles
+  with_items: "{{dotfiles}}"
 
 - name: link files to ~
   file: src=~/dotfiles/{{item}} dest=~/.{{item}} state=link
   tags: [utils]
-  with_items: dotfiles
+  with_items: "{{dotfiles}}"
 
 # packages
 - name: install fedora utility packages

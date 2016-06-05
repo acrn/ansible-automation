@@ -12,14 +12,14 @@
   tags: vim
   dnf: name={{item}} state=latest
   become: yes
-  with_items: vim_packages.fedora
+  with_items: "{{ vim_packages.fedora }}"
   when: ansible_distribution == "Fedora"
 
 - name: install ubuntu vim packages
   tags: vim
   apt: name={{item}} state=latest
   become: yes
-  with_items: vim_packages.ubuntu
+  with_items: "{{ vim_packages.ubuntu }}"
   when: ansible_distribution == "Ubuntu"
 
 - name: vimrc
