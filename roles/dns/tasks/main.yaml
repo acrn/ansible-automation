@@ -9,6 +9,15 @@
   pacman: name=bind state=latest
   when: ansible_distribution == "Archlinux"
 
+- name: limit journal log size
+  tags: dns
+  lineinfile:
+    dest: /etc/systemd/journald.conf
+    regexp: ^#?SystemMaxUse=
+    line: SystemMaxUse=100M
+  become: yes
+  notify: restart journald
+
 - name: named.conf
   tags: dns
   template:
@@ -18,7 +27,7 @@
     group: named
     mode: 0640
   become: yes
-  register: named_conf
+  notify: reload named
 
 - name: named dir
   tags: dns
@@ -39,7 +48,7 @@
     group: named
     mode: 0640
   become: yes
-  register: zone_config_template
+  notify: reload named
 
 - name: zone dir
   tags: dns
@@ -60,7 +69,7 @@
     group: named
     mode: 0640
   become: yes
-  register: zone_template
+  notify: reload named
 
 - name: reverse zone file
   tags: dns
@@ -71,7 +80,7 @@
     group: named
     mode: 0640
   become: yes
-  register: zone_reverse_template
+  notify: reload named
 
 - name: get default firewall zone
   tags: dns
@@ -96,20 +105,6 @@
   tags: dns
   command: firewall-cmd --zone={{ firewall_default_zone.stdout }}
            --add-port=53/udp --permanent
+  become: yes
   when: firewall_open_ports|changed
-  become: yes
-
-- name: reload firewall
-  tags: dns
-  service: name=firewalld state=restarted  # "reloaded" leaves it off???
-  when: firewall_open_ports|changed
-  become: yes
-
-- name: reload named
-  tags: dns
-  service: name=named state=reloaded enabled=yes
-  when: named_conf|changed
-        or zone_config_template|changed
-        or zone_template|changed
-        or zone_reverse_template|changed
-  become: yes
+  notify: restart firewall

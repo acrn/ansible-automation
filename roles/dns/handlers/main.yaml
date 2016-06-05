@@ -1,0 +1,12 @@
+---
+- name: restart journald
+  service: name=systemd-journald state=restarted
+  become: yes
+
+- name: restart firewall
+  service: name=firewalld state=restarted  # "reloaded" leaves it off???
+  become: yes
+
+- name: reload named
+  service: name=named state=reloaded enabled=yes
+  become: yes
