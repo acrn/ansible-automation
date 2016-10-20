@@ -19,7 +19,6 @@ vim_plugins:
 
 vim_colorschemes:
   - https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
-  - https://raw.githubusercontent.com/lyxell/pride.vim/master/colors/pride.vim
   - https://raw.githubusercontent.com/nielsmadan/harlequin/master/colors/harlequin.vim
 
 # bash
