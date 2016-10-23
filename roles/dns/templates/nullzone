@@ -1,11 +1,11 @@
-$TTL    86400   ; one day
-@       IN      SOA     ads.alkali. hostmaster.alkali. (
+$TTL    1D
+@       IN      SOA     ads.{{ dns_domain }}. hostmaster.{{ dns_domain }}. (
                     {{ lookup("pipe", "date +'%y%m%d%H%M'") }}     ; serial
                     28800
                      7200
                    864000
                     86400 )
-                NS      dns.alkali
+                NS      {{ inventory_hostname }}.{{ dns_domain }}.
                 A       127.0.0.1
 @       IN      A       127.0.0.1
 *       IN      A       127.0.0.1
