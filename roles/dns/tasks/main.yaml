@@ -50,6 +50,10 @@
   become: yes
   notify: reload named
 
+# TODO: include_vars has been changed in 2.2
+- include_vars: blacklist.yaml
+  when: dns_block_ads
+
 - name: blacklist config file
   tags: dns
   template:
