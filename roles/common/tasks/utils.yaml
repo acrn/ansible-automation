@@ -47,12 +47,11 @@
   apt: name={{item}} state=present
   become: yes
   with_items:
-    - ansible
     #- docker.io  #TODO: only skip on chromebooks
     - htop
     - mc
     - nmap
-    - npm
     - tmux
     - xsel
+    - python3
   when: ansible_distribution == "Ubuntu"

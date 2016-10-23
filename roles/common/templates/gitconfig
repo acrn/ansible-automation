@@ -17,8 +17,10 @@
 [cola]
     fontdiff = DejaVu Sans Mono,8,-1,5,50,0,0,0,0,0
     fontui = DejaVu Sans,8,-1,5,50,0,0,0,0,0
+{% if chromebook is not defined %}
 [push]
     default = simple
+{% endif %}
 [alias]
     co = checkout
     ci = commit
