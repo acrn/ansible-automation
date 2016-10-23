@@ -51,7 +51,9 @@
   notify: reload named
 
 # TODO: include_vars has been changed in 2.2
-- include_vars: blacklist.yaml
+- include_vars: pgl_yoyo_org_adlist.yaml
+  when: dns_block_ads
+- include_vars: custom_blacklist.yaml
   when: dns_block_ads
 
 - name: blacklist config file
