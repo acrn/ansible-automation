@@ -12,6 +12,7 @@ dns_acl:
     - localnets
 dns_zone_dir: /etc/named/zones
 dns_domain: alkali
+dns_block_ads: no
 dns_a_records:
   192.168.1.1:
     - router
