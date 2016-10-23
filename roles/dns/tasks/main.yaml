@@ -50,6 +50,17 @@
   become: yes
   notify: reload named
 
+- name: blacklist config file
+  tags: dns
+  template:
+    src: blacklist.conf
+    dest: /etc/named/blacklist.conf
+    owner: root
+    group: named
+    mode: 0640
+  become: yes
+  notify: reload named
+
 - name: zone dir
   tags: dns
   file:
@@ -76,6 +87,17 @@
   template:
     src: zone-reverse
     dest: "{{ dns_zone_dir }}/{{ dns_domain }}-reverse"
+    owner: root
+    group: named
+    mode: 0640
+  become: yes
+  notify: reload named
+
+- name: null zone file
+  tags: dns
+  template:
+    src: nullzone
+    dest: "{{ dns_zone_dir }}/null"
     owner: root
     group: named
     mode: 0640
