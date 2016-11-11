@@ -1,0 +1,11 @@
+[Unit]
+Description=Rygel DLNA server
+After=syslog.target
+
+[Service]
+User=media
+Group=media
+ExecStart=/usr/bin/rygel
+
+[Install]
+WantedBy=multi-user.target
