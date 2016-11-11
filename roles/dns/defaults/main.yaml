@@ -41,5 +41,6 @@ dns_a_records:
     - dns
     - helium
     - git
+    - media
   192.168.1.120:
     - kindle

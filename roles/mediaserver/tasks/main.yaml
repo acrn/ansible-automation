@@ -1,0 +1,73 @@
+---
+- name: create media group
+  tags: media
+  group: name={{ mediaserver_group }} system=yes
+  become: yes
+
+- name: create mediaserver user
+  tags: mediaserver
+  user:
+    name: "{{ mediaserver_user }}"
+    group: "{{ mediaserver_group }}"
+    system: yes
+    generate_ssh_key: yes
+    home: "{{ mediaserver_home }}"
+  become: yes
+
+- name: install rygel
+  tags: mediaserver
+  pacman: name=rygel state=latest
+  when: ansible_distribution == "Archlinux"
+  become: yes
+
+- name: install gstreamer plugins
+  tags: mediaserver
+  pacman: name="{{ item }}" state=latest
+  when: ansible_distribution == "Archlinux"
+  become: yes
+  with_items:
+    - gstreamer
+    - gst-plugins-base
+    - gst-plugins-good
+    - gst-plugins-bad
+    - gst-plugins-ugly
+
+- name: clean script
+  tags: mediaserver
+  template:
+    src: clean_rygel.sh
+    dest: "{{ mediaserver_home }}/clean_rygel.sh"
+    mode: 0655
+    owner: "{{ mediaserver_user }}"
+    group: "{{ mediaserver_group }}"
+  become: yes
+
+- name: create config directory
+  tags: mediaserver
+  file:
+    path: "{{ mediaserver_home }}/.config"
+    state: directory
+    owner: "{{ mediaserver_user }}"
+    group: "{{ mediaserver_group }}"
+  become: yes
+
+- name: create media directories
+  tags: mediaserver
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ mediaserver_user }}"
+    group: "{{ mediaserver_group }}"
+    mode: 0777
+  with_items: "{{ mediaserver_folders }}"
+  become: yes
+
+- name: rygel.conf
+  tags: mediaserver
+  template:
+    src: rygel.conf
+    dest: "{{ mediaserver_home }}/.config/rygel.conf"
+    mode: 0655
+    owner: "{{ mediaserver_user }}"
+    group: "{{ mediaserver_group }}"
+  become: yes

@@ -1,0 +1,97 @@
+#!/bin/bash
+
+for p in \
+  rygel \
+  libmediaart \
+  libtracker-sparql \
+  libstemmer \
+  icu \
+  gtk3 \
+  desktop-file-utils \
+  wayland-protocols \
+  json-glib \
+  adwaita-icon-theme \
+  librsvg \
+  libcroco \
+  gtk-update-icon-cache \
+  hicolor-icon-theme \
+  libxkbcommon \
+  xkeyboard-config \
+  at-spi2-atk \
+  at-spi2-core \
+  libxtst \
+  recordproto \
+  shared-mime-info \
+  pango \
+  libxft \
+  libthai \
+  libdatrie \
+  libxcomposite \
+  compositeproto \
+  dconf \
+  gdk-pixbuf2 \
+  jasper \
+  libtiff \
+  libjpeg-turbo \
+  libepoxy \
+  libxi \
+  inputproto \
+  libxrandr \
+  randrproto \
+  libxinerama \
+  xineramaproto \
+  libxcursor \
+  cairo \
+  mesa-libgl \
+  mesa \
+  llvm-libs \
+  libtxc_dxtn \
+  libomxil-bellagio \
+  elfutils \
+  libxshmfence \
+  libxdamage \
+  damageproto \
+  libxfixes \
+  fixesproto \
+  libxxf86vm \
+  xf86vidmodeproto \
+  wayland \
+  libdrm \
+  libpciaccess \
+  pixman \
+  fontconfig \
+  freetype2 \
+  harfbuzz \
+  graphite \
+  libxrender \
+  renderproto \
+  libpng \
+  atk \
+  libgee \
+  gupnp-dlna \
+  gst-plugins-base-libs \
+  libxv \
+  videoproto \
+  libxext \
+  xextproto \
+  libx11 \
+  kbproto \
+  libxcb \
+  libxau \
+  libxdmcp \
+  xproto \
+  xcb-proto \
+  orc \
+  gstreamer \
+  libunwind \
+  gupnp-av \
+  gupnp \
+  gssdp \
+  libsoup \
+  glib-networking \
+  gsettings-desktop-schemas \
+  libproxy
+
+do
+  pacman -R --noconfirm "$p"
+done

@@ -11,6 +11,9 @@ helium ansible_ssh_host=helium.alkali ansible_python_interpreter=/usr/bin/python
 [gitservers]
 git ansible_ssh_host=git.alkali ansible_python_interpreter=/usr/bin/python2
 
+[mediaservers]
+media ansible_ssh_host=media.alkali ansible_python_interpreter=/usr/bin/python2
+
 [devmachines]
 bismuth
 cerium

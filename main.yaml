@@ -17,3 +17,7 @@
 - hosts: gitservers
   roles:
     - gitserver
+
+- hosts: mediaservers
+  roles:
+    - mediaserver
