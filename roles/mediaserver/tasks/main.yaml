@@ -16,13 +16,13 @@
 
 - name: install rygel
   tags: mediaserver
-  pacman: name=rygel state=latest
+  pacman: name=rygel state=present
   when: ansible_distribution == "Archlinux"
   become: yes
 
 - name: install gstreamer plugins
   tags: mediaserver
-  pacman: name="{{ item }}" state=latest
+  pacman: name="{{ item }}" state=present
   when: ansible_distribution == "Archlinux"
   become: yes
   with_items:
@@ -59,6 +59,7 @@
     owner: "{{ mediaserver_user }}"
     group: "{{ mediaserver_group }}"
     mode: 0777
+    recurse: yes
   with_items: "{{ mediaserver_folders }}"
   become: yes
 

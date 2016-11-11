@@ -1,7 +1,7 @@
 ---
 mediaserver_user: media
 mediaserver_group: media
-mediaserver_home: /var/media
+mediaserver_home: /home/media
 mediaserver_folders:
   - /var/media/Music
   - /var/media/Videos
