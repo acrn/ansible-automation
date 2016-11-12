@@ -1,0 +1,8 @@
+---
+mediaserver_folders:
+  - /var/media/Music
+  - /var/media/Videos
+  - /var/media/Pictures
+  - /mnt/icybox/media/Music
+  - /mnt/icybox/media/Videos
+  - /mnt/icybox/media/Pictures
