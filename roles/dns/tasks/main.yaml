@@ -2,11 +2,13 @@
 - name: install fedora bind
   tags: dns
   dnf: name=bind state=latest
+  become: yes
   when: ansible_distribution == "Fedora"
 
 - name: install arch bind
   tags: dns
   pacman: name=bind state=latest
+  become: yes
   when: ansible_distribution == "Archlinux"
 
 - name: limit journal log size
@@ -37,6 +39,16 @@
     owner: root
     group: named
     mode: 0750
+  become: yes
+
+- name: named data dir
+  tags: dns
+  file:
+    path: /var/named/data
+    state: directory
+    owner: named
+    group: named
+    mode: 0770
   become: yes
 
 - name: zone config file
