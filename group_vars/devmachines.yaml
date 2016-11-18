@@ -1,25 +1,13 @@
 ---
-lein:
-  script:
-    dest: ~/bin/lein
-    checksum: "b59d741e3ad28b3a11ea28eab417133492ca2138"
-    url:
-      "https://raw.githubusercontent.com/technomancy/leiningen/2.5.1/bin/lein"
-  standalone:
-    dest: "~/.lein/self-installs/leiningen-2.5.1-standalone.jar"
-    checksum: "1c526e6573713b0635a1f2d52502ffa04ae45383"
-
 # vim
 vim_plugins_github:
   #- gmarik/Vundle.vim
   - godlygeek/tabular
-  - guns/vim-clojure-static
   - itchyny/lightline.vim
   - kien/ctrlp.vim
   - mattn/emmet-vim
   - rking/ag.vim
   - scrooloose/nerdcommenter
-  - tpope/vim-fireplace
   - tpope/vim-fugitive
   - tpope/vim-surround
   - Valloric/YouCompleteMe
