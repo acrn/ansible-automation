@@ -1,6 +1,6 @@
 $TTL    1D
 @       IN      SOA     ads.{{ dns_domain }}. hostmaster.{{ dns_domain }}. (
-                    {{ lookup("pipe", "date +'%y%m%d%H%M'") }}     ; serial
+                    {{ dns_serial }}
                     28800
                      7200
                    864000

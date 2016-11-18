@@ -1,7 +1,7 @@
 ; {{ ansible_managed }}
 $TTL 1D
 @	IN SOA	{{ inventory_hostname }}.{{ dns_domain }}. admin.{{ dns_domain }}. (
-					{{ lookup("pipe", "date +'%y%m%d%H%M'") }}     ; serial
+					{{ dns_serial }}
 					1D    ; refresh
 					1H    ; retry
 					1W    ; expire
