@@ -25,6 +25,12 @@
   tags: [utils]
   with_items: "{{dotfiles}}"
 
+- name: Fetch git completion script
+  tags: [utils]
+  get_url:
+    url: "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh"
+    dest: ~/dotfiles
+
 # packages
 - name: install fedora utility packages
   tags: utils
