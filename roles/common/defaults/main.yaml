@@ -7,7 +7,7 @@ vim_packages:
   ubuntu:
     - vim-gnome
 
-vim_plugins:
+vim_plugins_github:
   #- faith/vim-go   keeps asking for github password
   #- gmarik/Vundle.vim
   - godlygeek/tabular

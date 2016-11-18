@@ -10,20 +10,20 @@ set lazyredraw
   set ttyfast
 {% endif %}
 
-{% if 'gmarik/Vundle.vim' in vim_plugins %}
+{% if 'gmarik/Vundle.vim' in vim_plugins_github %}
   " vundle
   set rtp+=~/.vim/bundle/Vundle.vim
   call vundle#begin()
-  {% for plugin in vim_plugins %}
+  {% for plugin in vim_plugins_github %}
     Plugin '{{ plugin }}'
   {% endfor %}
   call vundle#end()
 {% else %}
   set rtp+=
-  {% for plugin in vim_plugins %}
+  {% for plugin in vim_plugins_github %}
     \~/.vim/bundle/{{ plugin|regex_replace('.*/', '') }},
   {% endfor %}
-  {% for plugin in vim_plugins %}
+  {% for plugin in vim_plugins_github %}
     \~/.vim/bundle/{{ plugin|regex_replace('.*/', '') }}/after,
   {% endfor %}
 {% endif %}
@@ -39,7 +39,7 @@ set incsearch
 set showmatch
 set smartcase
 
-{% if 'Valloric/YouCompleteMe' in vim_plugins %}
+{% if 'Valloric/YouCompleteMe' in vim_plugins_github %}
   " turn down ycm logging
   let g:ycm_server_log_level = 'warning'
 {% endif %}
@@ -74,7 +74,7 @@ syntax enable
 {% if chromebook is defined %}
   " <C-v> closes chrome tab
   nnoremap <C-v> <C-w>
-  {% if 'kien/ctrlp.vim' in vim_plugins %}
+  {% if 'kien/ctrlp.vim' in vim_plugins_github %}
     " Don't have a proper F5
     nnoremap <leader>r :CtrlPClearAllCaches<cr>
   {% endif %}
@@ -95,7 +95,7 @@ nnoremap <leader>t :TagbarToggle<cr>
 nnoremap <leader>riw yiw:/gc<home>%s/\<<C-r>"\>/
 nnoremap <leader>riW yiW:/gc<home>%s/\<<C-r>"\>/
 
-{% if 'rking.ag.vim' in vim_plugins %}
+{% if 'rking.ag.vim' in vim_plugins_github %}
   " search
   nnoremap <leader>a :Ag 
 {% endif %}
@@ -129,7 +129,7 @@ if $TERM =~ '256'
   {% endif %}
 endif
 
-{% if 'itchyny/lightline.vim' in vim_plugins %}
+{% if 'itchyny/lightline.vim' in vim_plugins_github %}
   let g:lightline = {
     \ 'separator': {'left':'', 'right':''},
     \ 'subseparator': {'left':'', 'right':'⁕'}}

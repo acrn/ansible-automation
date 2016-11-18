@@ -10,7 +10,7 @@ lein:
     checksum: "1c526e6573713b0635a1f2d52502ffa04ae45383"
 
 # vim
-vim_plugins:
+vim_plugins_github:
   #- gmarik/Vundle.vim
   - godlygeek/tabular
   - guns/vim-clojure-static

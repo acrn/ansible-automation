@@ -14,7 +14,7 @@ dotfiles:
   - Xmodmap
 
 # vim
-vim_plugins:
+vim_plugins_github:
   - gmarik/Vundle.vim
   - godlygeek/tabular
   - itchyny/lightline.vim

@@ -42,13 +42,13 @@
        dest="~/dotfiles/vim/bundle/YouCompleteMe"
   tags: vim
   register: ycm_update
-  when: "'Valloric/YouCompleteMe' in vim_plugins"
+  when: "'Valloric/YouCompleteMe' in vim_plugins_github"
 
 - name: update vundle
   git: repo="https://github.com/gmarik/Vundle.vim.git"
        dest="~/dotfiles/vim/bundle/Vundle.vim"
   tags: vim
-  when: "'gmarik/Vundle.vim' in vim_plugins"
+  when: "'gmarik/Vundle.vim' in vim_plugins_github"
 
 - name: install fedora ycm build dependencies
   tags: vim
@@ -60,7 +60,7 @@
     - gcc-c++
     - python-devel
   when: ansible_distribution == "Fedora"
-        and 'Valloric/YouCompleteMe' in vim_plugins
+        and 'Valloric/YouCompleteMe' in vim_plugins_github
         and ycm_update.changed
 
 - name: install ubuntu ycm build dependencies
@@ -72,7 +72,7 @@
     - gcc
     - python-dev
   when: ansible_distribution == "Ubuntu"
-        and 'Valloric/YouCompleteMe' in vim_plugins
+        and 'Valloric/YouCompleteMe' in vim_plugins_github
         and ycm_update.changed
 
 - name: compile YouCompleteMe
@@ -80,17 +80,17 @@
   command: "./install.sh"  #yolo, this is all highly insucure anyway
   args:
     chdir: "~/dotfiles/vim/bundle/YouCompleteMe"
-  when: ycm_update.changed and 'Valloric/YouCompleteMe' in vim_plugins
+  when: ycm_update.changed and 'Valloric/YouCompleteMe' in vim_plugins_github
 
 - name: update plugins
   git: repo="https://github.com/{{item}}.git"
        dest="~/dotfiles/vim/bundle/{{item.split('/')[1]}}"
   tags: vim
-  with_items: "{{vim_plugins|difference('Valloric/YouCompleteMe')}}"
-  when: "'gmarik/Vundle.vim' not in vim_plugins"
+  with_items: "{{vim_plugins_github|difference('Valloric/YouCompleteMe')}}"
+  when: "'gmarik/Vundle.vim' not in vim_plugins_github"
   # TODO: Why is emmet always "changed"?
 
 - name: Vundle PluginUpdate
   tags: vim
   command: vim -R --cmd "set nocp" +PluginUpdate +qa
-  when: "'gmarik/Vundle.vim' in vim_plugins"
+  when: "'gmarik/Vundle.vim' in vim_plugins_github"
