@@ -1,0 +1,3 @@
+---
+ansible_ssh_host: git.alkali
+ansible_python_interpreter: /usr/bin/python2

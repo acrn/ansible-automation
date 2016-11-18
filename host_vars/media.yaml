@@ -1,4 +1,6 @@
 ---
+ansible_ssh_host: media.alkali
+ansible_python_interpreter: /usr/bin/python2
 mediaserver_folders:
   - /var/media/Music
   - /var/media/Videos

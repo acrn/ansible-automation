@@ -1,2 +1,3 @@
 ---
 internal_ip: 192.168.1.67
+ansible_ssh_host: bismuth.alkali

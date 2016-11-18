@@ -1,21 +1,23 @@
 [chromebooks]
-chrome ansible_connection=local
+chrome
 
 [raspberrypis]
-helium ansible_ssh_host=helium.alkali ansible_python_interpreter=/usr/bin/python2
+helium
 
 [gitservers]
-git ansible_ssh_host=git.alkali ansible_python_interpreter=/usr/bin/python2
+git
 
 [mediaservers]
-media ansible_ssh_host=media.alkali ansible_python_interpreter=/usr/bin/python2
+media
 
 [devmachines]
 bismuth
 cerium
+arch
 
 [dnsservers]
-dns ansible_ssh_host=192.168.100.100 ansible_python_interpreter=/usr/bin/python2
+dns
+arch
 
 [workstations:children]
 devmachines
