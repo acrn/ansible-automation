@@ -13,11 +13,11 @@ media
 [devmachines]
 bismuth
 cerium
-arch
+carbon
 
 [dnsservers]
 dns
-arch
+carbon
 
 [workstations:children]
 devmachines

@@ -2,3 +2,4 @@
 - include: utils.yaml
 - include: vim.yaml
 - include: keyboard.yaml
+  when: gnome_shell

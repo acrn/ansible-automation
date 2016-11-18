@@ -34,6 +34,8 @@ dns_a_records:
     - bismuth
   192.168.84.12:
     - cerium
+  192.168.84.13:
+    - carbon
   192.168.1.191:
     - oxygen
   192.168.1.212:
