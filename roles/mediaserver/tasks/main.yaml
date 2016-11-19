@@ -72,6 +72,7 @@
     owner: "{{ mediaserver_user }}"
     group: "{{ mediaserver_group }}"
   become: yes
+  notify: restart rygel
 
 - name: systemd service
   tags: mediaserver
@@ -79,8 +80,4 @@
     src: rygel.service
     dest: /etc/systemd/system/rygel.service
   become: yes
-
-- name: enable and start rygel
-  tags: mediaserver
-  service: name=rygel.service state=started enabled=yes
-  become: yes
+  notify: restart rygel

@@ -1,0 +1,5 @@
+---
+- name: restart rygel
+  tags: mediaserver
+  service: name=rygel.service state=restarted enabled=yes
+  become: yes
