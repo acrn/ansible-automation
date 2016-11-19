@@ -5,6 +5,7 @@
   register: grep
   changed_when: false
   ignore_errors: true
+  always_run: yes
 
 - name: create temp file
   command: mktemp
@@ -41,12 +42,13 @@
   tags: [keyboard]
   register: input_sources
   changed_when: false
-  when: gnome_shell is defined
+  when: gnome_shell
+  always_run: yes
 
 - name: set gnome shell preference
   command: dbus-launch --exit-with-session gsettings
              set org.gnome.desktop.input-sources sources
              "{{gnome_shell_input_sources}}"
   tags: [keyboard]
-  when: gnome_shell is defined and
+  when: gnome_shell and
         input_sources.stdout|replace(" ", "") != gnome_shell_input_sources|replace(" ", "")

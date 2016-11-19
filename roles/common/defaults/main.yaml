@@ -38,4 +38,5 @@ dotfiles:
 
 # keyboard:
 xkb_symbols_file: /usr/share/X11/xkb/symbols/us
+gnome_shell: no
 gnome_shell_input_sources: "[('xkb', 'us+dvorak')]"
