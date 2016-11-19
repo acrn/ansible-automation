@@ -1,0 +1,30 @@
+---
+# infrastructure
+router:   FF:FF:FF:FF:FF:FF
+siebnes:  FF:FF:FF:FF:FF:FF
+dns:      FF:FF:FF:FF:FF:FF
+dhcp:     FF:FF:FF:FF:FF:FF
+
+# workstations
+chrome:   FF:FF:FF:FF:FF:FF
+cobalt:   FF:FF:FF:FF:FF:FF
+bismuth:  FF:FF:FF:FF:FF:FF
+cerium:   FF:FF:FF:FF:FF:FF
+carbon:   FF:FF:FF:FF:FF:FF
+oxygen:   FF:FF:FF:FF:FF:FF
+
+# servers
+helium:  FF:FF:FF:FF:FF:FF
+git:     FF:FF:FF:FF:FF:FF
+
+# media
+receiver:  FF:FF:FF:FF:FF:FF
+media:     FF:FF:FF:FF:FF:FF
+iridium:   FF:FF:FF:FF:FF:FF
+wdtv:      FF:FF:FF:FF:FF:FF
+
+# handhelds
+iphone:  FF:FF:FF:FF:FF:FF
+nexus7:  FF:FF:FF:FF:FF:FF
+kindle:  FF:FF:FF:FF:FF:FF
+

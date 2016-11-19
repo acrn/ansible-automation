@@ -1,0 +1,32 @@
+---
+- name: install dhcpd
+  pacman:
+    name: dhcp
+    state: present
+  become: yes
+
+- name: load ip address vars
+  include_vars:
+    file: addr.yaml
+    name: dhcp_addr
+
+- name: load mac address vars
+  include_vars:
+    file: mac.yaml
+    name: dhcp_mac
+
+- name: dhcpd.conf
+  tags: dhcp
+  template:
+    dest: /etc/dhcpd.conf
+    src: dhcpd.conf
+  become: yes
+  notify: restart dhcpd
+
+- name: dhcpd.service
+  tags: dhcp
+  template:
+    dest: "/etc/systemd/system/dhcpd4@{{ dhcp_network_interface }}.service"
+    src: dhcpd.service
+  become: yes
+  notify: restart dhcpd

@@ -1,0 +1,15 @@
+---
+dhcp_network_interface: eth0
+
+dhcp_dns_servers:
+  - 8.8.8.8
+  - 8.8.4.4
+dhcp_subnet_mask: 255.255.0.0
+dhcp_broadcast_address: 192.168.255.255
+dhcp_routers: [192.168.1.1]
+dhcp_subnets:
+  - network: 192.168.0.0
+    netmask: 255.255.0.0
+    ranges:
+      - [192.168.201.2, 192.168.201.50]
+dhcp_static_routes: []

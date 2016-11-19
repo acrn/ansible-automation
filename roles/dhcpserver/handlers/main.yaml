@@ -1,0 +1,7 @@
+---
+- name: restart dhcpd
+  service:
+    name: dhcpd4@{{ dhcp_network_interface }}
+    state: restarted
+    enabled: yes
+  become: yes

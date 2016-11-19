@@ -1,0 +1,20 @@
+---
+dhcp_dns_servers:
+  - 192.168.100.100
+  - 192.168.84.13
+dhcp_subnets:
+  - network: 192.168.0.0
+    netmask: 255.255.0.0
+    ranges:
+      - [192.168.127.1, 192.168.127.254]
+      - [192.168.137.1, 192.168.137.254]
+      - [192.168.147.1, 192.168.147.254]
+dhcp_static_routes:
+  - chrome
+  - receiver
+  - iridium
+  - wdtv
+  - nexus7
+  - kindle
+  - oxygen
+  - iphone

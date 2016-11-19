@@ -1,4 +1,8 @@
 ---
+- hosts: dhcpservers
+  roles:
+    - dhcpserver
+
 - hosts: dnsservers
   roles:
     - dns
