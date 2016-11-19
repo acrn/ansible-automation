@@ -1,5 +1,5 @@
 ---
-ansible_ssh_host: 192.168.100.100
+ansible_host: 192.168.1.2
 ansible_python_interpreter: /usr/bin/python2
-internal_ip: 192.168.100.100
+internal_ip: 192.168.1.2
 dns_block_ads: yes

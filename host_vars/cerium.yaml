@@ -1,2 +1,2 @@
 ---
-ansible_ssh_host: cerium.alkali
+ansible_host: 192.168.84.12
