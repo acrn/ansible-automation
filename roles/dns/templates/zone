@@ -11,7 +11,7 @@ $TTL 1D
 	IN	NS	{{ inventory_hostname }}.{{ dns_domain }}.
 
 ; name servers - A records
-{{ inventory_hostname }}.{{ dns_domain }}.	IN	A	{{ internal_ip }}
+{{ inventory_hostname }}.{{ dns_domain }}.	IN	A	{{ ansible_host }}
 
 ; A records
 {% for hostname, ip in dns_addr.items() | sort %}
