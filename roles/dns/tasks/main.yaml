@@ -90,6 +90,11 @@
     mode: 0770
   become: yes
 
+- name: load ip address vars
+  include_vars:
+    file: addr.yaml
+    name: dns_addr
+
 - name: zone file
   tags: dns
   template:
@@ -130,6 +135,7 @@
   register: firewall_default_zone
   changed_when: false
   ignore_errors: yes
+  always_run: yes
 
 - debug: msg="You should probably check on the firewall..."
   tags: dns

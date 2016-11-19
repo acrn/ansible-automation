@@ -14,8 +14,6 @@ $TTL 1D
 {{ inventory_hostname }}.{{ dns_domain }}.	IN	A	{{ internal_ip }}
 
 ; A records
-{% for ip, hostnames in dns_a_records.items() %}
-{% for hostname in hostnames %}
+{% for hostname, ip in dns_addr.items() | sort %}
 {{ hostname }}.{{ dns_domain }}.	IN	A	{{ ip }}
-{% endfor %}
 {% endfor %}

@@ -14,36 +14,3 @@ dns_acl:
 dns_zone_dir: /etc/named/zones
 dns_domain: alkali
 dns_block_ads: no
-dns_a_records:
-  192.168.1.1:
-    - router
-    - siebnes
-  192.168.1.8:
-    - iphone
-  192.168.1.21:
-    - iridium
-  192.168.1.24:
-    - wdtv
-  192.168.1.90:
-    - nexus7
-  192.168.1.91:
-    - chrome
-  192.168.1.142:
-    - cobalt
-  192.168.84.11:
-    - bismuth
-  192.168.84.12:
-    - cerium
-  192.168.84.13:
-    - carbon
-  192.168.1.191:
-    - oxygen
-  192.168.1.212:
-    - receiver
-  192.168.100.100:
-    - dns
-    - helium
-    - git
-    - media
-  192.168.1.120:
-    - kindle

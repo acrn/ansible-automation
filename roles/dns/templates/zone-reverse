@@ -11,12 +11,10 @@ $TTL 1D
 	IN	NS	{{ inventory_hostname }}.{{ dns_domain }}.
 
 ; PTR records
-{% for ip, hostnames in dns_a_records.items() %}
-{% for hostname in hostnames %}
+{% for hostname, ip in dns_addr.items() | sort %}
 {{ ip.split('.')
    |reverse
    |slice(2)
    |first
    |join('.') }}	IN	PTR	{{ hostname }}.{{ dns_domain }}.
-{% endfor %}
 {% endfor %}

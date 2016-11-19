@@ -1,0 +1,29 @@
+---
+# infrastructure
+router:  192.168.1.1
+siebnes: 192.168.1.1
+dns:     192.168.100.100
+
+# workstations
+chrome:  192.168.1.91
+cobalt:  192.168.1.142
+bismuth: 192.168.84.11
+cerium:  192.168.84.12
+carbon:  192.168.84.13
+oxygen:  192.168.1.191
+
+# servers
+helium: 192.168.100.100
+git:    192.168.100.100
+
+# media
+receiver: 192.168.1.212
+media:    192.168.100.100
+iridium:  192.168.1.21
+wdtv:     192.168.1.24
+
+# handhelds
+iphone: 192.168.1.8
+nexus7: 192.168.1.90
+kindle: 192.168.1.120
+
