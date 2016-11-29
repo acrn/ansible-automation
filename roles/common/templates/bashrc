@@ -91,6 +91,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias info='info --vi-keys'
+alias cp='cp --reflink=auto'
 # fix tmux woes
 alias tmux='TERM=xterm-256color tmux'
 

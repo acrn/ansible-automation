@@ -33,6 +33,18 @@
     dest: ~/dotfiles
 
 # packages
+- name: install arch utility packages
+  tags: utils
+  pacman: name={{item}} state=present
+  become: yes
+  with_items:
+    - docker
+    - htop
+    - nmap
+    - tmux
+    - xsel
+  when: ansible_distribution == "Archlinux"
+
 - name: install fedora utility packages
   tags: utils
   dnf: name={{item}} state=present
