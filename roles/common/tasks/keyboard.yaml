@@ -1,54 +1,26 @@
 ---
-- name: check if file is already modified
-  command: grep 'modified by ansible' "{{xkb_symbols_file}}"
-  tags: [keyboard]
-  register: grep
-  changed_when: false
-  ignore_errors: true
-  always_run: yes
-
-- name: create temp file
-  command: mktemp
-  tags: [keyboard]
-  when: not grep.stdout
-  register: tmpfile
-
-- name: process keyboard layout
-  script: scripts/modify_xkb_layout.py {{xkb_symbols_file}} {{tmpfile.stdout}}
-  tags: [keyboard]
-  when: not grep.stdout
-  register: script_out
-
-- name: set file permissions
-  tags: [keyboard]
+- name: append modded layout
+  tags: keyboard
   become: yes
-  when: not grep.stdout
-  file: path={{tmpfile.stdout}} owner=root group=root mode=0644
+  blockinfile:
+    backup: yes
+    insertafter: 'xkb_symbols\s+"dvorak"\s+{'
+    dest: /usr/share/X11/xkb/symbols/us
+    marker: '// {mark} Even asleep we partake in the becoming of the world'
+    block: |
+      //
+          name[Group1]= "English (Dvorak, modified)";
+          include "us(dvorak-std)"
 
-- name: copy file to xkb folder
-  command: cp {{tmpfile.stdout}} {{xkb_symbols_file}}
-  tags: [keyboard]
-  when: not grep.stdout
-  become: yes
+          key <AC01> { [ a, A, aring,       Aring      ] };
+          key <AC02> { [ o, O, odiaeresis,  Odiaeresis ] };
+          key <AC03> { [ e, E, adiaeresis,  Adiaeresis ] };
+          key <AC09> { [ n, N, ntilde,      Ntilde     ] };
+          key <AD10> { [ l, L, dead_stroke, dead_acute ] };
+          key <LSGT> { [ dead_diaeresis, dead_abovering, dead_tilde, dead_stroke ] };
+          key <CAPS> { [ Escape ] };
+          include "level3(ralt_switch)"
+      };
 
-- name: remove compiled layouts
-  command: find /var/lib/xkb -name "*.xkm" -delete
-  when: not grep.stdout
-  changed_when: false
-  become: yes
-
-- name: check gnome shell prefernce
-  command: gsettings get org.gnome.desktop.input-sources sources
-  tags: [keyboard]
-  register: input_sources
-  changed_when: false
-  when: gnome_shell
-  always_run: yes
-
-- name: set gnome shell preference
-  command: dbus-launch --exit-with-session gsettings
-             set org.gnome.desktop.input-sources sources
-             "{{gnome_shell_input_sources}}"
-  tags: [keyboard]
-  when: gnome_shell and
-        input_sources.stdout|replace(" ", "") != gnome_shell_input_sources|replace(" ", "")
+      partial alphanumeric_keys
+      xkb_symbols "dvorak-std" {
