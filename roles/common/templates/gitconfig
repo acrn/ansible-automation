@@ -1,8 +1,8 @@
 [core]
     editor = vim
 [user]
-    name = Anders Oscarsen
-    email = andersoscarsen@gmail.com
+    name = {{ personal.name }}
+    email = {{ personal.email }}
 [color]
     status = auto
     diff = auto
