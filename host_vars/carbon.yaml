@@ -5,7 +5,7 @@ dns_block_ads: yes
 vim_plugins_github:
   - godlygeek/tabular
   - itchyny/lightline.vim
-  - kien/ctrlp.vim
+  - ctrlpvim/ctrlp.vim
   - rking/ag.vim
   - scrooloose/nerdcommenter
   - tpope/vim-fugitive

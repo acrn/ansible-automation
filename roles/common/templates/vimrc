@@ -74,7 +74,7 @@ syntax enable
 {% if chromebook is defined %}
   " <C-v> closes chrome tab
   nnoremap <C-v> <C-w>
-  {% if 'kien/ctrlp.vim' in vim_plugins_github %}
+  {% if 'ctrlpvim/ctrlp.vim' in vim_plugins_github %}
     " Don't have a proper F5
     nnoremap <leader>r :CtrlPClearAllCaches<cr>
   {% endif %}

@@ -5,7 +5,7 @@ ansible_python_interpreter: /usr/bin/python2
 vim_plugins_github:
   - godlygeek/tabular
   - itchyny/lightline.vim
-  - kien/ctrlp.vim
+  - ctrlpvim/ctrlp.vim
   - mattn/emmet-vim
   - rking/ag.vim
   - scrooloose/nerdcommenter
