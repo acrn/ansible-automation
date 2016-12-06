@@ -1,0 +1,35 @@
+zstyle ':completion:*' completer _complete _ignored
+zstyle :compinstall filename '~/.zshrc'
+zstyle ':completion:*' menu select=2
+autoload -Uz zmv
+autoload -Uz compinit
+compinit
+
+HISTFILE=~/.histfile
+HISTSIZE=3000
+SAVEHIST=10000
+[[ "$USER" == "root" ]] && __color=%F{red} || __color=%F{green}
+PROMPT="$__color"'%n@%m%f> '
+RPROMPT='<%F{yellow}%~%f'
+
+unsetopt beep
+setopt extendedglob
+setopt printexitvalue
+
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+bindkey '^P' history-incremental-search-forward
+
+alias ll='ls -alF'
+alias ls='ls --color=auto'
+alias cp='cp --reflink=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias diff='diff --color=auto'
+alias sudo='sudo '
+alias dbash='docker exec -i -t $(docker ps -q | head -1) bash'
+alias treeless='tree -C | less -R'
+alias tmux='ssh-agent tmux'
+
+[ -f ~/.zshrc_local ] && . ~/.zshrc_local

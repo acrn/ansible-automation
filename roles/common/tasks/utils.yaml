@@ -37,6 +37,14 @@
     url: "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh"
     dest: ~/dotfiles
 
+- name: Make zshrc the default shell
+  tags: [utils]
+  lineinfile:
+    dest: /etc/default/useradd
+    regexp: ^SHELL=
+    line: SHELL=/usr/bin/zsh
+  become: yes
+
 # packages
 - name: install arch utility packages
   tags: utils

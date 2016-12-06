@@ -35,3 +35,4 @@ dotfiles:
   - gitconfig
   - tmux.conf
   - xinitrc
+  - zshrc
