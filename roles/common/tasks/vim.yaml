@@ -13,7 +13,7 @@
   dnf: name={{item}} state=latest
   become: yes
   with_items: "{{ vim_packages.fedora }}"
-  when: ansible_distribution == "Fedora"
+  when: ansible_distribution in ("Fedora", "CentOS")
 
 - name: install ubuntu vim packages
   tags: vim
@@ -38,8 +38,10 @@
   with_items: "{{ vim_colorschemes }}"
 
 - name: update ycm
-  git: repo="https://github.com/Valloric/YouCompleteMe.git"
-       dest="~/dotfiles/vim/bundle/YouCompleteMe"
+  git:
+    repo: "https://github.com/Valloric/YouCompleteMe.git"
+    dest: "~/dotfiles/vim/bundle/YouCompleteMe"
+    force: yes
   tags: vim
   register: ycm_update
   when: "'Valloric/YouCompleteMe' in vim_plugins_github"
@@ -52,7 +54,7 @@
 
 - name: install arch ycm build dependencies
   tags: vim
-  dnf: name={{item}} state=latest
+  pacman: name={{item}} state=latest
   become: yes
   with_items:
     - cmake
@@ -60,7 +62,7 @@
     - make
   when:
     - ansible_distribution == "Archlinux"
-    - 'Valloric/YouCompleteMe' in vim_plugins_github
+    - "'Valloric/YouCompleteMe' in vim_plugins_github"
     - ycm_update.changed
 
 - name: install fedora ycm build dependencies
@@ -72,9 +74,10 @@
     - gcc
     - gcc-c++
     - python-devel
-  when: ansible_distribution == "Fedora"
-        and 'Valloric/YouCompleteMe' in vim_plugins_github
-        and ycm_update.changed
+  when:
+    - ansible_distribution in ("Fedora", "CentOS")
+    - "'Valloric/YouCompleteMe' in vim_plugins_github"
+    - ycm_update.changed
 
 - name: install ubuntu ycm build dependencies
   tags: vim
@@ -84,9 +87,10 @@
     - cmake
     - gcc
     - python-dev
-  when: ansible_distribution == "Ubuntu"
-        and 'Valloric/YouCompleteMe' in vim_plugins_github
-        and ycm_update.changed
+  when:
+    - ansible_distribution == "Ubuntu"
+    - "'Valloric/YouCompleteMe' in vim_plugins_github"
+    - ycm_update.changed
 
 - name: compile YouCompleteMe
   tags: vim

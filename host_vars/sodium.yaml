@@ -12,3 +12,4 @@ vim_plugins_github:
   - tpope/vim-fugitive
   - tpope/vim-surround
   - vim-scripts/Tagbar
+  - Valloric/YouCompleteMe
