@@ -50,6 +50,19 @@
   tags: vim
   when: "'gmarik/Vundle.vim' in vim_plugins_github"
 
+- name: install arch ycm build dependencies
+  tags: vim
+  dnf: name={{item}} state=latest
+  become: yes
+  with_items:
+    - cmake
+    - gcc
+    - make
+  when:
+    - ansible_distribution == "Archlinux"
+    - 'Valloric/YouCompleteMe' in vim_plugins_github
+    - ycm_update.changed
+
 - name: install fedora ycm build dependencies
   tags: vim
   dnf: name={{item}} state=latest
@@ -77,7 +90,7 @@
 
 - name: compile YouCompleteMe
   tags: vim
-  command: "./install.sh"  #yolo, this is all highly insucure anyway
+  command: "./install.py"  #yolo, this is all highly insucure anyway
   args:
     chdir: "~/dotfiles/vim/bundle/YouCompleteMe"
   when: ycm_update.changed and 'Valloric/YouCompleteMe' in vim_plugins_github
