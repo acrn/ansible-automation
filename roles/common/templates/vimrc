@@ -112,8 +112,11 @@ set tags=./tags;$HOME
 " autocommands
 au VimResized * exe "normal! \<c-w>="
 
-autocmd BufRead,BufNewFile *.html,*.js,*.css,*.scss,*.yaml
+autocmd BufRead,BufNewFile *.html,*.js,*.css,*.scss,*.yaml,*.yml
     \ setl shiftwidth=2 tabstop=2 softtabstop=2
+
+autocmd BufRead,BufNewFile *.yaml,*.yml
+    \ setl indentkeys-=<:>
 
 " cosmetics
 
