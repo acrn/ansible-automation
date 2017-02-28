@@ -123,9 +123,9 @@ call matchadd('ColorColumn', '\%80v', 20)
 if $TERM =~ '256'
   set t_Co=256
   set background=dark
-  {% if 'https://raw.githubusercontent.com/altercation/vim-colors-solarized/'
-        'master/colors/solarized.vim' in vim_colorschemes %}
-    colorscheme solarized
+  {% if 'https://raw.githubusercontent.com/nielsmadan/'
+        'harlequin/master/colors/harlequin.vim' in vim_colorschemes %}
+    colorscheme harlequin
   {% endif %}
 endif
 
