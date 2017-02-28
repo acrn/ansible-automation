@@ -123,9 +123,8 @@ call matchadd('ColorColumn', '\%80v', 20)
 if $TERM =~ '256'
   set t_Co=256
   set background=dark
-  {% if 'https://raw.githubusercontent.com/nielsmadan/'
-        'harlequin/master/colors/harlequin.vim' in vim_colorschemes %}
-    colorscheme harlequin
+  {% if vim_default_colorscheme is defined %}
+    colorscheme {{ vim_default_colorscheme }}
   {% endif %}
 endif
 

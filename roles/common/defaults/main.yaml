@@ -20,6 +20,7 @@ vim_plugins_github:
 vim_colorschemes:
   - https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
   - https://raw.githubusercontent.com/nielsmadan/harlequin/master/colors/harlequin.vim
+vim_default_colorscheme: harlequin
 
 # bash
 bash_histsize: 500
