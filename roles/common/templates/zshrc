@@ -1,6 +1,8 @@
 zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '~/.zshrc'
 zstyle ':completion:*' menu select=2
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*:commands' list-colors '=*=1;30'
 autoload -Uz zmv
 autoload -Uz compinit
 compinit
@@ -26,6 +28,9 @@ alias cp='cp --reflink=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+{% if ansible_distribution == "Archlinux" %}
+alias pacman='pacman --color=auto'
+{% endif %}
 alias diff='diff --color=auto'
 alias sudo='sudo '
 alias dbash='docker exec -i -t $(docker ps -q | head -1) bash'
