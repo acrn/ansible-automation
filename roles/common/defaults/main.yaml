@@ -18,9 +18,10 @@ vim_plugins_github:
   - vim-scripts/Tagbar
 
 vim_colorschemes:
+  - https://raw.githubusercontent.com/AlessandroYorba/Alduin/master/colors/alduin.vim
   - https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
   - https://raw.githubusercontent.com/nielsmadan/harlequin/master/colors/harlequin.vim
-vim_default_colorscheme: harlequin
+vim_default_colorscheme: alduin
 
 # bash
 bash_histsize: 500

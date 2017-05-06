@@ -13,6 +13,7 @@ SAVEHIST=10000
 [[ "$USER" == "root" ]] && __color=%F{red} || __color=%F{green}
 PROMPT="$__color"'%n@%m%f> '
 RPROMPT='<%F{yellow}%~%f'
+GOPATH=~/go
 
 unsetopt beep
 setopt extendedglob
@@ -37,6 +38,6 @@ alias dbash='docker exec -i -t $(docker ps -q | head -1) bash'
 alias treeless='tree -C | less -R'
 alias tmux='ssh-agent tmux -2'
 
-path+=("$HOME/bin")
+path+=("$HOME/bin" "$GOPATH/bin")
 
 [ -f ~/.zshrc_local ] && . ~/.zshrc_local
