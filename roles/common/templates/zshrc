@@ -35,6 +35,8 @@ alias diff='diff --color=auto'
 alias sudo='sudo '
 alias dbash='docker exec -i -t $(docker ps -q | head -1) bash'
 alias treeless='tree -C | less -R'
-alias tmux='ssh-agent tmux'
+alias tmux='ssh-agent tmux -2'
+
+path+=("$HOME/bin")
 
 [ -f ~/.zshrc_local ] && . ~/.zshrc_local
