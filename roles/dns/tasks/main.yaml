@@ -135,7 +135,7 @@
   register: firewall_default_zone
   changed_when: false
   ignore_errors: yes
-  always_run: yes
+  check_mode: no
 
 - debug: msg="You should probably check on the firewall..."
   tags: dns
