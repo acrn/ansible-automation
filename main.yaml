@@ -15,6 +15,10 @@
   roles:
     - development
 
+- hosts: webservers
+  roles:
+    - webserver
+
 - hosts: gitservers
   roles:
     - gitserver

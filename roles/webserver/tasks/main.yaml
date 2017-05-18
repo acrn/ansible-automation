@@ -1,0 +1,14 @@
+---
+- name: install nginx
+  pacman:
+    name: nginx-mainline
+    state: present
+  become: yes
+  notify: restart nginx
+
+- name: write nginx.conf
+  template:
+    dest: /etc/nginx/nginx.conf
+    src: nginx.conf
+  notify: restart nginx
+  become: yes
