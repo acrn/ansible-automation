@@ -1,0 +1,11 @@
+[Unit]
+Description=hpa's original TFTP daemon
+After=network.target
+
+[Service]
+Type=forking
+EnvironmentFile=/etc/conf.d/tftpd
+ExecStart=/usr/bin/in.tftpd -vvv -a {{ansible_host}} -4 --listen --secure /var/pxe
+
+[Install]
+WantedBy=multi-user.target

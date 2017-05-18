@@ -7,6 +7,10 @@
   roles:
     - dns
 
+- hosts: pxeservers
+  roles:
+    - pxeserver
+
 - hosts: workstations
   roles:
     - common

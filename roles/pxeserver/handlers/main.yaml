@@ -1,0 +1,14 @@
+---
+- name: restart tftpd
+  service:
+    name: tftpd
+    state: restarted
+    enabled: yes
+  become: yes
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
+  become: yes

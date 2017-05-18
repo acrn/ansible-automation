@@ -29,3 +29,6 @@ carbon
 [workstations:children]
 devmachines
 chromebooks
+
+[pxeservers]
+pxe

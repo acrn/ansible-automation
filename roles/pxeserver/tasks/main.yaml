@@ -1,0 +1,62 @@
+---
+- name: install tftp
+  pacman:
+    name: tftp-hpa
+    state: present
+  become: yes
+
+- name: create directories
+  file:
+    dest: "{{item}}"
+    state: directory
+  become: yes
+  with_items:
+    - /var/pxe/iso
+    - /var/pxe/pxelinux.cfg
+
+- name: set iso path
+  set_fact:
+    arch_iso: /mnt/icybox/iso/archlinux-2017.05.01-x86_64.iso
+  when: not arch_iso|d
+
+- name: stat mounted iso
+  stat:
+    path: /var/pxe/iso/arch/pkglist.x86_64.txt
+    get_checksum: false
+  register: stat_iso
+
+- name: mount iso file  # TODO: use mount module, or fstab
+  command: >
+    mount -o loop,ro
+          {{ arch_iso }}
+          /var/pxe/iso
+  become: yes
+  when: not stat_iso.stat.exists
+
+- name: symlink stuff
+  command: ln -s {{item.target}} {{item.name}}
+  args:
+    chdir: /var/pxe
+    creates: "{{item.name}}"
+  with_items:
+    - target: iso/arch/boot/syslinux/lpxelinux.0
+      name: pxelinux.0
+    - target: ../iso/arch/boot/syslinux/archiso.cfg
+      name: pxelinux.cfg/default
+    - target: iso/arch/boot
+      name: boot
+  become: yes
+
+- name: tftpd.service
+  template:
+    dest: /usr/lib/systemd/system/tftpd.service
+    src: tftpd.service
+  become: yes
+  notify: restart tftpd
+
+- name: http server
+  template:
+    dest: /etc/nginx/servers/archiso.conf
+    src: pxe_nginx_server.conf
+  become: yes
+  notify: restart nginx
