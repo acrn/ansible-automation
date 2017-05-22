@@ -1,5 +1,6 @@
 [dhcpservers]
 dhcp
+dhcp1
 
 [chromebooks]
 chrome
@@ -24,6 +25,7 @@ sodium
 
 [dnsservers]
 dns
+ns1
 carbon
 
 [workstations:children]

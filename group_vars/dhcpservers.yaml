@@ -1,7 +1,7 @@
 ---
 dhcp_dns_servers:
+  - 192.168.1.5
   - 192.168.1.2
-  - 192.168.84.13
 dhcp_subnets:
   - network: 192.168.0.0
     netmask: 255.255.0.0

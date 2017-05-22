@@ -1,0 +1,10 @@
+---
+ansible_host: 192.168.1.7
+ansible_python_interpreter: /usr/bin/python2
+dhcp_network_interface: enp2s0
+
+dhcp_subnets:
+  - network: 192.168.0.0
+    netmask: 255.255.0.0
+    ranges:
+      - [192.168.135.1, 192.168.135.254]
