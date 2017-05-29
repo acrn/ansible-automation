@@ -1,0 +1,17 @@
+---
+- name: load addresses
+  include_vars:
+    file: addr.yaml
+    name: addr
+
+- name: wired.network
+  tags: dhcp
+  template:
+    dest: /etc/systemd/network/wired.network
+    src: wired.network
+  notify: restart systemd-networkd
+
+- name: enable systemd-networkd
+  service:
+    name: systemd-networkd
+    enabled: yes

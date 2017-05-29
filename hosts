@@ -1,3 +1,8 @@
+[systemd_networkd]
+atom
+helium
+carbon
+
 [dhcpservers]
 dhcp1
 dhcp2

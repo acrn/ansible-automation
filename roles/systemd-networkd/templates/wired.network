@@ -1,0 +1,18 @@
+[Match]
+Name={{systemd_networkd_match.name}}
+
+[Network]
+{% for address in systemd_networkd_addresses %}
+# {{address}}
+Address={{addr[address]}}/16
+{% endfor %}
+{% if systemd_networkd_ips|d %}
+# Unnamed ips
+{% for ip in systemd_networkd_ips %}
+Address={{ip}}/16
+{% endfor %}
+{% endif %}
+Gateway={{systemd_networkd_gateway}}
+{% for dns in systemd_networkd_dns %}
+DNS={{dns}}
+{% endfor %}

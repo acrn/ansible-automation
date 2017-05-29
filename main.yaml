@@ -1,4 +1,9 @@
 ---
+- hosts: systemd_networkd
+  become: yes
+  roles:
+    - systemd-networkd
+
 - hosts: dhcpservers
   roles:
     - dhcpserver

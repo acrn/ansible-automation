@@ -1,14 +1,10 @@
 ---
-ansible_host: 192.168.9.1
+ansible_host: 192.168.7.1
 ansible_python_interpreter: /usr/bin/python2
 
 systemd_networkd_match:
-  name: eth0
-
+  name: enp2s0
 systemd_networkd_addresses:
-  - helium
-  - git
-  - ns2
-  - dhcp2
-  - pxe
-  - media
+  - atom
+  - ns1
+  - dhcp1
