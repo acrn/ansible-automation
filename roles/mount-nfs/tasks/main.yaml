@@ -25,7 +25,7 @@
   lineinfile:
     backup: yes
     dest: /etc/fstab
-    regexp: ^\\w+\\s+{{item.dir|regex_escape()}}\\s+
+    regexp: '^\S+\s+{{item.dir|regex_escape()}}\s+.*'
     line: >
       {{item.device}}
       {{item.dir}}
