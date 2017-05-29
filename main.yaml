@@ -4,6 +4,11 @@
   roles:
     - systemd-networkd
 
+- hosts: mount_nfs
+  become: yes
+  roles:
+    - mount-nfs
+
 - hosts: dhcpservers
   roles:
     - dhcpserver

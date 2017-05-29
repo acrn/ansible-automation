@@ -18,3 +18,12 @@ systemd_networkd_addresses:
   - carbon
 systemd_networkd_ips:
   - 192.168.123.123  # TODO: Is this used?
+mount_nfs_mounts:
+  - device: iridium.alkali:/c/media
+    dir: /mnt/iridium_media
+    options:
+      vers: vers=3
+  - device: iridium.alkali:/c/archive
+    dir: /mnt/iridium_archive
+    options:
+      vers: vers=3

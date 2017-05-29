@@ -39,3 +39,6 @@ chromebooks
 
 [pxeservers]
 pxe
+
+[mount_nfs]
+carbon

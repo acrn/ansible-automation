@@ -1,0 +1,39 @@
+---
+- name: install nfs-utils
+  pacman:
+    name: nfs-utils
+    state: present
+  become: yes
+  when: ansible_distribution == "Archlinux"
+
+- name: create mount points
+  file:
+    dest: "{{item.dir}}"
+    state: directory
+  become: yes
+  with_items: "{{mount_nfs_mounts}}"
+
+
+- name: write lines to fstab
+  vars:
+    mount_nfs_default_options:
+      auto: noauto
+      systemd_automount: x-systemd.automount
+      systemd_device_timeout: x-systemd.device-timeout=10
+      systemd_idle_timeout: x-systemd.idle-timeout=1min
+      timeo: timeo=14
+  lineinfile:
+    backup: yes
+    dest: /etc/fstab
+    regexp: ^\\w+\\s+{{item.dir|regex_escape()}}\\s+
+    line: >
+      {{item.device}}
+      {{item.dir}}
+      nfs
+      {{(mount_nfs_default_options|combine(item.get('options', {}))).values()|sort|join(',')}}
+      0
+      0
+  with_items: "{{mount_nfs_mounts}}"
+
+# TODO:  `mount -a` does not mount lines in fstab with `noauto`.  I don't know
+# how to mount this without rebooting the system
