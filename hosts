@@ -3,41 +3,41 @@ atom
 helium
 carbon
 
-[dhcpservers]
+[dhcpserver]
 dhcp1
 dhcp2
 
-[chromebooks]
+[chromebook]
 chrome
 
-[raspberrypis]
+[raspberrypi]
 helium
 
-[webservers]
+[webserver]
 helium
 
-[gitservers]
+[gitserver]
 git
 
-[mediaservers]
+[mediaserver]
 media
 
-[devmachines]
+[devmachine]
 bismuth
 cerium
 carbon
 sodium
 
-[dnsservers]
+[dnsserver]
 ns1
 ns2
 carbon
 
-[workstations:children]
-devmachines
-chromebooks
+[workstation:children]
+devmachine
+chromebook
 
-[pxeservers]
+[pxeserver]
 pxe
 
 [mount_nfs]

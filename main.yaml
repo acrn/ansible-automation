@@ -9,34 +9,34 @@
   roles:
     - mount-nfs
 
-- hosts: dhcpservers
+- hosts: dhcpserver
   roles:
     - dhcpserver
 
-- hosts: dnsservers
+- hosts: dnsserver
   roles:
     - dns
 
-- hosts: pxeservers
+- hosts: pxeserver
   roles:
     - pxeserver
 
-- hosts: workstations
+- hosts: workstation
   roles:
     - common
 
-- hosts: devmachines
+- hosts: devmachine
   roles:
     - development
 
-- hosts: webservers
+- hosts: webserver
   roles:
     - webserver
 
-- hosts: gitservers
+- hosts: gitserver
   roles:
     - gitserver
 
-- hosts: mediaservers
+- hosts: mediaserver
   roles:
     - mediaserver
