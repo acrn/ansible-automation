@@ -1,44 +1,6 @@
-[systemd_networkd]
-atom
-helium
-carbon
+#!/usr/bin/python3
 
-[dhcpserver]
-dhcp1
-dhcp2
+import hosts
 
-[chromebook]
-chrome
-
-[raspberrypi]
-helium
-
-[webserver]
-helium
-
-[gitserver]
-git
-
-[mediaserver]
-media
-
-[devmachine]
-bismuth
-cerium
-carbon
-sodium
-
-[dnsserver]
-ns1
-ns2
-carbon
-
-[workstation:children]
-devmachine
-chromebook
-
-[pxeserver]
-pxe
-
-[mount_nfs]
-carbon
+if __name__ == '__main__':
+    hosts.main()
