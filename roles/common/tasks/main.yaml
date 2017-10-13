@@ -1,4 +1,4 @@
 ---
-- include: utils.yaml
-- include: vim.yaml
-- include: keyboard.yaml
+- include_tasks: utils.yaml
+- include_tasks: vim.yaml
+- include_tasks: keyboard.yaml
