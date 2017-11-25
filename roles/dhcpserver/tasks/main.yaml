@@ -5,11 +5,6 @@
     state: present
   become: yes
 
-- name: load mac address vars
-  include_vars:
-    file: mac.yaml
-    name: dhcp_mac
-
 - name: dhcpd.conf
   tags: dhcp
   template:
