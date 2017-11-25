@@ -29,7 +29,7 @@ alias cp='cp --reflink=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-{% if ansible_distribution == "Archlinux" %}
+{% if ansible_distribution.startswith('Arch Linux') %}
 alias pacman='pacman --color=auto'
 {% endif %}
 alias diff='diff --color=auto'

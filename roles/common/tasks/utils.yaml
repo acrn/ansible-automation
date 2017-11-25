@@ -56,7 +56,7 @@
     - nmap
     - tmux
     - xsel
-  when: ansible_distribution == "Archlinux"
+  when: ansible_distribution.startswith('Arch Linux')
 
 - name: install fedora utility packages
   tags: utils

@@ -17,13 +17,13 @@
 - name: install rygel
   tags: mediaserver
   pacman: name=rygel state=present
-  when: ansible_distribution == "Archlinux"
+  when: ansible_distribution.startswith('Arch Linux')
   become: yes
 
 - name: install gstreamer plugins
   tags: mediaserver
   pacman: name="{{ item }}" state=present
-  when: ansible_distribution == "Archlinux"
+  when: ansible_distribution.startswith('Arch Linux')
   become: yes
   with_items:
     - gstreamer

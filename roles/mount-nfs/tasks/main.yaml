@@ -4,7 +4,7 @@
     name: nfs-utils
     state: present
   become: yes
-  when: ansible_distribution == "Archlinux"
+  when: ansible_distribution.startswith('Arch Linux')
 
 - name: create mount points
   file:

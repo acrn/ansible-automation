@@ -61,7 +61,7 @@
     - gcc
     - make
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_distribution.startswith('Arch Linux')
     - "'Valloric/YouCompleteMe' in vim_plugins_github"
     - ycm_update.changed
 
