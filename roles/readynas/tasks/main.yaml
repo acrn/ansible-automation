@@ -1,0 +1,33 @@
+---
+# The NAS doesn't have python installed, so a few things must be done manually
+# before running ansible:
+#
+# 1. Enable ssh access
+#
+#      The addon is at:
+#      www.readynas.com/download/addons/arm/5.3/EnableRootSSH_1.0-arm.bin
+#
+# 2. Fix /etc/apt/sources.list
+#
+#      Netgear have taken down their repo and debian jessie has been archived.
+#      Use the following:
+#
+# 			 deb http://archive.debian.org/debian/ squeeze main
+# 			 deb-src http://archive.debian.org/debian/ squeeze main
+#
+# 			 deb http://archive.debian.org/debian-security squeeze/updates main
+# 			 deb-src http://archive.debian.org/debian-security squeeze/updates main
+#
+# 3. apt-get update && apt-get install python
+#
+# 4. create a user with sudo
+#
+- name: install utilities
+  tags: readynas
+  become: yes
+  package:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - vim
+    - htop

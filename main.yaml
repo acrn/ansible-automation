@@ -40,3 +40,7 @@
 - hosts: mediaserver
   roles:
     - mediaserver
+
+- hosts: readynas
+  roles:
+    - readynas

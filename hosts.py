@@ -24,6 +24,7 @@ reversed_inventory = {
         'ns2':          ['dnsserver'],
         'git':          ['gitserver'],
         'helium':       ['systemd_networkd', 'raspberrypi', 'webserver'],
+        'iridium':      ['readynas'],
         'media':        ['mediaserver'],
         'pxe':          ['pxeserver'],
         'sodium':       ['devmachine']},
