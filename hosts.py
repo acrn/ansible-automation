@@ -10,7 +10,7 @@ reversed_inventory = {
         'devmachine':   ['workstation'],
         'chromebook':   ['workstation']},
     'groups_by_host': {
-        'atom':         ['systemd_networkd', 'dnsserver', 'dhcpserver'],
+        'atom':         ['systemd_networkd'],
         'bismuth':      ['devmachine'],
         'carbon':       ['systemd_networkd',
                          'devmachine',
