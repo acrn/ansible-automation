@@ -4,7 +4,7 @@ Name={{systemd_networkd_match.name}}
 [Network]
 {% for address in systemd_networkd_addresses %}
 # {{address}}
-Address={{addr[address]}}/16
+Address={{ips[address]}}/16
 {% endfor %}
 {% if systemd_networkd_ips|d %}
 # Unnamed ips

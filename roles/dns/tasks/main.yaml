@@ -90,11 +90,6 @@
     mode: 0770
   become: yes
 
-- name: load ip address vars
-  include_vars:
-    file: addr.yaml
-    name: dns_addr
-
 - name: zone file
   tags: dns
   template:

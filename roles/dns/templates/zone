@@ -14,6 +14,6 @@ $TTL 1D
 {{ inventory_hostname }}.{{ dns_domain }}.	IN	A	{{ ansible_host }}
 
 ; A records
-{% for hostname, ip in dns_addr.items() | sort %}
+{% for hostname, ip in ips.items() | sort %}
 {{ hostname }}.{{ dns_domain }}.	IN	A	{{ ip }}
 {% endfor %}

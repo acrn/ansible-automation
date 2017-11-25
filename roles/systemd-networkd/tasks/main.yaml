@@ -1,9 +1,4 @@
 ---
-- name: load addresses
-  include_vars:
-    file: addr.yaml
-    name: addr
-
 - name: wired.network
   tags: dhcp
   template:

@@ -1,0 +1,37 @@
+---
+ips:
+  # infrastructure
+  router:  192.168.1.1
+  siebnes: 192.168.1.1
+  ns1:     192.168.1.11
+  ns2:     192.168.1.12
+  dhcp1:   192.168.1.31
+  dhcp2:   192.168.1.32
+  pxe:     192.168.1.121
+
+  # workstations
+  chrome:      192.168.84.1
+  cobalt:      192.168.84.10
+  bismuth:     192.168.84.11
+  cerium:      192.168.84.12
+  carbon:      192.168.84.13
+  oxygen:      192.168.84.9
+  sodium:      192.168.84.3
+  sodium-wlan: 192.168.84.4
+
+  # servers
+  atom:   192.168.7.1
+  helium: 192.168.9.1
+  git:    192.168.9.2
+
+  # media
+  media:    192.168.71.1
+  receiver: 192.168.71.2
+  wdtv:     192.168.71.3
+  iridium:  192.168.71.4
+
+  # handhelds
+  iphone6s: 192.168.81.1
+  nexus7:   192.168.81.2
+  kindle:   192.168.81.3
+  iphone4:  192.168.81.8

@@ -5,11 +5,6 @@
     state: present
   become: yes
 
-- name: load ip address vars
-  include_vars:
-    file: addr.yaml
-    name: dhcp_addr
-
 - name: load mac address vars
   include_vars:
     file: mac.yaml
