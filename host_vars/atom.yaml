@@ -1,6 +1,5 @@
 ---
 ansible_host: 192.168.7.1
-ansible_python_interpreter: /usr/bin/python2
 
 systemd_networkd_match:
   name: enp2s0

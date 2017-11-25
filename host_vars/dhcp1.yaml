@@ -1,6 +1,5 @@
 ---
 ansible_host: 192.168.1.31
-ansible_python_interpreter: /usr/bin/python2
 dhcp_network_interface: enp2s0
 
 dhcp_subnets:

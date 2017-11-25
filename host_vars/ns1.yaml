@@ -1,4 +1,3 @@
 ---
 ansible_host: 192.168.1.11
-ansible_python_interpreter: /usr/bin/python2
 dns_block_ads: yes

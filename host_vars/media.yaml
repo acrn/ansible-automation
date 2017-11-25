@@ -1,6 +1,5 @@
 ---
 ansible_host: 192.168.71.1
-ansible_python_interpreter: /usr/bin/python2
 mediaserver_folders:
   - /var/media/Music
   - /var/media/Videos

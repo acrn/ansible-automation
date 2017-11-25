@@ -1,6 +1,5 @@
 ---
 ansible_host: 192.168.84.13
-ansible_python_interpreter: /usr/bin/python2
 dns_block_ads: yes
 vim_plugins_github:
   - godlygeek/tabular
