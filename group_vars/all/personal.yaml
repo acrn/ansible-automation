@@ -1,0 +1,5 @@
+---
+personal_fullname: "{{vault_personal_fullname}}"
+personal_email: "{{vault_personal_email}}"
+personal_username: "{{vault_personal_username}}"
+

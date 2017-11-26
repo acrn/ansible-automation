@@ -1,8 +1,8 @@
 [core]
     editor = vim
 [user]
-    name = {{ personal.name }}
-    email = {{ personal.email }}
+    name = {{ personal_fullname }}
+    email = {{ personal_email }}
 [color]
     status = auto
     diff = auto

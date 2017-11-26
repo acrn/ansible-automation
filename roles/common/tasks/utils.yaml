@@ -2,11 +2,6 @@
 - file: path=~/dotfiles state=directory mode=0755
   tags: utils
 
-- name: load personal information
-  include_vars:
-    file: personal.yaml
-    name: personal
-
 - name: render dotfile templates
   tags: [utils]
   template: src="{{item}}" dest="~/dotfiles/{{item}}"
