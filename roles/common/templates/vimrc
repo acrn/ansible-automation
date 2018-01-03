@@ -10,24 +10,6 @@ set lazyredraw
   set ttyfast
 {% endif %}
 
-{% if 'gmarik/Vundle.vim' in vim_plugins_github %}
-  " vundle
-  set rtp+=~/.vim/bundle/Vundle.vim
-  call vundle#begin()
-  {% for plugin in vim_plugins_github %}
-    Plugin '{{ plugin }}'
-  {% endfor %}
-  call vundle#end()
-{% else %}
-  set rtp+=
-  {% for plugin in vim_plugins_github %}
-    \~/.vim/bundle/{{ plugin|regex_replace('.*/', '') }},
-  {% endfor %}
-  {% for plugin in vim_plugins_github %}
-    \~/.vim/bundle/{{ plugin|regex_replace('.*/', '') }}/after,
-  {% endfor %}
-{% endif %}
-
 " mappings
 let mapleader = ' '
 "  powerline
@@ -39,7 +21,7 @@ set incsearch
 set showmatch
 set smartcase
 
-{% if 'Valloric/YouCompleteMe' in vim_plugins_github %}
+{% if 'ycm' in vim_plugins %}
   " turn down ycm logging
   let g:ycm_server_log_level = 'warning'
 {% endif %}
@@ -85,16 +67,10 @@ nnoremap <left> :bn<CR>
 nnoremap <right> :bp<CR>
 nnoremap <leader>i :set list!<CR>
 nnoremap <leader>p :set paste!<CR>
-nnoremap <leader>t :TagbarToggle<cr>
 
 " replace
 nnoremap <leader>riw yiw:/gc<home>%s/\<<C-r>"\>/
 nnoremap <leader>riW yiW:/gc<home>%s/\<<C-r>"\>/
-
-{% if 'rking.ag.vim' in vim_plugins_github %}
-  " search
-  nnoremap <leader>a :Ag 
-{% endif %}
 
 vnoremap <leader>n :normal 
 
@@ -103,7 +79,7 @@ set directory=~/.vim/tmp
 set backupdir=~/.vim/tmp
 
 " plugins
-{% if 'tpope/vim-fugitive' in vim_plugins_github %}
+{% if 'fugitive' in vim_plugins %}
   nnoremap <leader>gb :Gblame<cr>
   nnoremap <leader>gc :Gcommit<cr>
   nnoremap <leader>gd :Gdiff<cr>
@@ -157,7 +133,8 @@ if $TERM =~ '256'
   {% endif %}
 endif
 
-{% if 'itchyny/lightline.vim' in vim_plugins_github %}
+
+{% if 'lightline' in vim_plugins %}
   let g:lightline = {
     \ 'separator': {'left':'', 'right':''},
     \ 'subseparator': {'left':'', 'right':'⁕'}}

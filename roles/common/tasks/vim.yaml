@@ -7,9 +7,16 @@
   tags: vim
   with_items:
     - ~/dotfiles/vim/plugin
-    - ~/dotfiles/vim/bundle
     - ~/dotfiles/vim/tmp
     - ~/dotfiles/vim/colors
+
+- name: Create pack dirs
+  file:
+    path: "{{'~/dotfiles/vim/pack/{0}/{1}'.format(
+              item.value.get('pack', 'base'),
+              item.value.get('phase', 'start'))}}"
+    state: directory
+  with_dict: "{{vim_plugins}}"
 
 - name: Link .vim directory
   file:
@@ -18,19 +25,30 @@
     state: link
   tags: vim
 
-- name: install fedora vim packages
+- name: install vim
   tags: vim
-  dnf: name={{item}} state=present
+  package:
+    name: vim
+    state: present
   become: yes
-  with_items: "{{ vim_packages.fedora }}"
-  when: ansible_distribution in ("Fedora", "CentOS")
 
-- name: install ubuntu vim packages
+- name: Check if fzf.vim is present
   tags: vim
-  apt: name={{item}} state=present
-  become: yes
-  with_items: "{{ vim_packages.ubuntu }}"
-  when: ansible_distribution == "Ubuntu"
+  stat:
+    path: ~/.fzf/fzf.vim
+    get_attributes: no
+    get_checksum: no
+    get_md5: no
+    get_mime: no
+  register: stat_fzf_vim
+
+- name: Link fzf.vim to plugin
+  tags: vim
+  file:
+    src: "{{stat_fzf_vim.stat.path}}"
+    dest: "~/dotfiles/vim/plugin/fzf.vim"
+    state: link
+  when: stat_fzf_vim.stat.exists
 
 - name: Check if fzf.vim is present
   tags: vim
@@ -62,80 +80,40 @@
 
 - name: Install colorschemes
   tags: vim
-  get_url: url="{{ item }}" dest=~/dotfiles/vim/colors
+  get_url:
+    url: "{{ item }}"
+    dest: ~/dotfiles/vim/colors
   with_items: "{{ vim_colorschemes }}"
 
-- name: update ycm
+- name: Install plugin dependencies
+  tags: vim
+  package:
+    name: "{{item}}"
+    state: present
+  with_items: "{{vim_plugins.values()
+                  |rejectattr('package_deps', 'undefined')
+                  |map(attribute='package_deps')
+                  |list}}"
+
+- name: Update pack plugins
   git:
-    repo: "https://github.com/Valloric/YouCompleteMe.git"
-    dest: "~/dotfiles/vim/bundle/YouCompleteMe"
-    force: yes
+    repo: "{{item.value.repo}}"
+    dest: "{{'~/dotfiles/vim/pack/{0}/{1}/{2}'.format(
+              item.value.get('pack', 'base'),
+              item.value.get('phase', 'start'),
+              item.key)}}"
   tags: vim
-  register: ycm_update
-  when: "'Valloric/YouCompleteMe' in vim_plugins_github"
+  register: mupperiet
+  with_dict: "{{vim_plugins}}"
 
-- name: update vundle
-  git: repo="https://github.com/gmarik/Vundle.vim.git"
-       dest="~/dotfiles/vim/bundle/Vundle.vim"
+- name: Exec plugin post commands
   tags: vim
-  when: "'gmarik/Vundle.vim' in vim_plugins_github"
-
-- name: install arch ycm build dependencies
-  tags: vim
-  pacman: name={{item}} state=latest
-  become: yes
-  with_items:
-    - cmake
-    - gcc
-    - make
-  when:
-    - ansible_distribution.startswith('Arch Linux')
-    - "'Valloric/YouCompleteMe' in vim_plugins_github"
-    - ycm_update.changed
-
-- name: install fedora ycm build dependencies
-  tags: vim
-  dnf: name={{item}} state=latest
-  become: yes
-  with_items:
-    - cmake
-    - gcc
-    - gcc-c++
-    - python-devel
-  when:
-    - ansible_distribution in ("Fedora", "CentOS")
-    - "'Valloric/YouCompleteMe' in vim_plugins_github"
-    - ycm_update.changed
-
-- name: install ubuntu ycm build dependencies
-  tags: vim
-  apt: name={{item}} state=latest
-  become: yes
-  with_items:
-    - cmake
-    - gcc
-    - python-dev
-  when:
-    - ansible_distribution == "Ubuntu"
-    - "'Valloric/YouCompleteMe' in vim_plugins_github"
-    - ycm_update.changed
-
-- name: compile YouCompleteMe
-  tags: vim
-  command: "./install.py"  #yolo, this is all highly insucure anyway
+  command: "{{item.on_changed}}"
   args:
-    chdir: "~/dotfiles/vim/bundle/YouCompleteMe"
-  when: ycm_update.changed and 'Valloric/YouCompleteMe' in vim_plugins_github
-
-- name: update plugins
-  git: repo="https://github.com/{{item}}.git"
-       dest="~/dotfiles/vim/bundle/{{item.split('/')[1]}}"
-  tags: vim
-  with_items: "{{vim_plugins_github|difference('Valloric/YouCompleteMe')}}"
-  when: "'gmarik/Vundle.vim' not in vim_plugins_github"
-  # TODO: Why is emmet always "changed"?
-
-- name: Vundle PluginUpdate
-  tags: vim
-  command: vim -R --cmd "set nocp" +PluginUpdate +qa
-  when: "'gmarik/Vundle.vim' in vim_plugins_github"
+    chdir: "~/dotfiles/vim/pack"
+  with_items: "{{mupperiet.results
+                  |selectattr('changed', 'equalto', true)
+                  |map(attribute='item')
+                  |map(attribute='value')
+                  |rejectattr('on_changed', 'undefined')
+                  |list}}"

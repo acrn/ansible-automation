@@ -1,20 +1,50 @@
 ---
 # vim
-vim_packages:
-  fedora:
-    - vim-X11
-    - vim-enhanced
-  ubuntu:
-    - vim-gnome
+vim_plugins:
+  lightline:
+    repo: https://github.com/itchyny/lightline.vim.git
+    pack: cosmetics
+  fugitive:
+    repo: https://github.com/tpope/vim-fugitive.git
+    pack: versioning
+  tabular:
+    repo: https://github.com/godlygeek/tabular.git
+    pack: formatting
+  nerdcommenter:
+    repo: https://github.com/scrooloose/nerdcommenter
+    pack: formatting
+  surround:
+    repo: https://github.com/tpope/vim-surround
+    pack: formatting
+  emmet:
+    repo: https://github.com/mattn/emmet-vim.git
+    pack: editing
+  ycm:
+    repo: https://github.com/Valloric/YouCompleteMe.git
+    pack: editing
+    package_deps: "{{
+      {
+        'Archlinux': vim_ycm_arch_package_deps,
+        'Ubuntu': vim_ycm_ubuntu_package_deps,
+      }.get(ansible_distribution, vim_ycm_default_package_deps)
+      }}"
+    on_changed: editing/start/ycm/install.py
 
-vim_plugins_github:
-  #- faith/vim-go   keeps asking for github password
-  #- gmarik/Vundle.vim
-  - godlygeek/tabular
-  - itchyny/lightline.vim
-  - rking/ag.vim
-  - tpope/vim-fugitive
-  - vim-scripts/Tagbar
+vim_ycm_arch_package_deps:
+  - cmake
+  - gcc
+
+vim_ycm_ubuntu_package_deps:
+  - cmake
+  - g++
+  - gcc
+  - python-dev
+
+vim_ycm_default_package_deps:
+  - cmake
+  - gcc
+  - gcc-c++
+  - python-devel
 
 vim_colorschemes:
   - https://raw.githubusercontent.com/AlessandroYorba/Alduin/master/colors/alduin.vim

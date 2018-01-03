@@ -1,17 +1,4 @@
 ---
-# vim
-vim_plugins_github:
-  #- gmarik/Vundle.vim
-  - godlygeek/tabular
-  - itchyny/lightline.vim
-  - mattn/emmet-vim
-  - rking/ag.vim
-  - scrooloose/nerdcommenter
-  - tpope/vim-fugitive
-  - tpope/vim-surround
-  - Valloric/YouCompleteMe
-  - vim-scripts/Tagbar
-
 gnome_shell: true
 
 # bash

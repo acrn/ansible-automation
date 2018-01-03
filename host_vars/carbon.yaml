@@ -1,14 +1,6 @@
 ---
 ansible_host: 192.168.84.13
 dns_block_ads: yes
-vim_plugins_github:
-  - godlygeek/tabular
-  - itchyny/lightline.vim
-  - rking/ag.vim
-  - scrooloose/nerdcommenter
-  - tpope/vim-fugitive
-  - tpope/vim-surround
-  - vim-scripts/Tagbar
 gnome_shell: false
 systemd_networkd_match:
   name: enp0s3
