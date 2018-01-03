@@ -41,3 +41,9 @@ alias tmux='ssh-agent tmux -2'
 path+=("$HOME/bin" "$GOPATH/bin")
 
 [ -f ~/.zshrc_local ] && . ~/.zshrc_local
+
+if [[ $- == *i* ]]
+then
+    [ -f ~/.fzf/completion.zsh ] && . ~/.fzf/completion.zsh
+    [ -f ~/.fzf/key-bindings.zsh ] && . ~/.fzf/key-bindings.zsh
+fi

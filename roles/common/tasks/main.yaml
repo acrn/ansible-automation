@@ -1,4 +1,5 @@
 ---
 - include_tasks: utils.yaml
+- include_tasks: fzf.yaml
 - include_tasks: vim.yaml
 - include_tasks: keyboard.yaml

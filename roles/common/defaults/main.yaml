@@ -27,6 +27,11 @@ vim_default_colorscheme: alduin
 bash_histsize: 500
 bash_histsizefile: 5000
 
+# fzf
+fzf_platform: linux_amd64
+fzf_version: 0.17.3
+fzf_binpath: ~/bin
+
 # utils
 tmux_conf:
   history_limit: 30000

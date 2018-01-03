@@ -1,0 +1,41 @@
+---
+- name: Create .fzf directory
+  file:
+    path: ~/.fzf/{{fzf_platform}}_{{fzf_version}}
+    state: directory
+
+- name: Download files
+  get_url:
+    url: "{{item.url}}"
+    dest: "{{item.dest}}"
+  with_items:
+    - url:  https://github.com/junegunn/fzf-bin/releases/download/{{fzf_version}}/fzf-{{fzf_version}}-{{fzf_platform}}.tgz
+      dest: ~/.fzf/{{fzf_platform}}_{{fzf_version}}/fzf.tgz
+    - url:  https://raw.githubusercontent.com/junegunn/fzf/{{fzf_version}}/shell/completion.zsh
+      dest: ~/.fzf/{{fzf_platform}}_{{fzf_version}}/completion.zsh
+    - url:  https://raw.githubusercontent.com/junegunn/fzf/{{fzf_version}}/shell/key-bindings.zsh
+      dest: ~/.fzf/{{fzf_platform}}_{{fzf_version}}/key-bindings.zsh
+    - url:  https://raw.githubusercontent.com/junegunn/fzf/{{fzf_version}}/plugin/fzf.vim
+      dest: ~/.fzf/{{fzf_platform}}_{{fzf_version}}/fzf.vim
+
+- name: Unarchive release
+  unarchive:
+    remote_src: yes
+    src:     ~/.fzf/{{fzf_platform}}_{{fzf_version}}/fzf.tgz
+    dest:    ~/.fzf/{{fzf_platform}}_{{fzf_version}}
+    creates: ~/.fzf/{{fzf_platform}}_{{fzf_version}}/fzf
+
+- name: Create links
+  file:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    state: link
+  with_items:
+    - src:  ~/.fzf/{{fzf_platform}}_{{fzf_version}}/fzf
+      dest: "{{fzf_binpath}}/fzf"
+    - src:  ~/.fzf/{{fzf_platform}}_{{fzf_version}}/completion.zsh
+      dest: ~/.fzf/completion.zsh
+    - src:  ~/.fzf/{{fzf_platform}}_{{fzf_version}}/key-bindings.zsh
+      dest: ~/.fzf/key-bindings.zsh
+    - src:  ~/.fzf/{{fzf_platform}}_{{fzf_version}}/fzf.vim
+      dest: ~/.fzf/fzf.vim
