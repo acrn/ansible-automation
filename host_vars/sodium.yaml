@@ -4,7 +4,6 @@ ansible_host: 192.168.84.3
 vim_plugins_github:
   - godlygeek/tabular
   - itchyny/lightline.vim
-  - ctrlpvim/ctrlp.vim
   - mattn/emmet-vim
   - rking/ag.vim
   - scrooloose/nerdcommenter

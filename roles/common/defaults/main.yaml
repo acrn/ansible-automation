@@ -12,7 +12,6 @@ vim_plugins_github:
   #- gmarik/Vundle.vim
   - godlygeek/tabular
   - itchyny/lightline.vim
-  - ctrlpvim/ctrlp.vim
   - rking/ag.vim
   - tpope/vim-fugitive
   - vim-scripts/Tagbar
@@ -22,6 +21,14 @@ vim_colorschemes:
   - https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
   - https://raw.githubusercontent.com/nielsmadan/harlequin/master/colors/harlequin.vim
 vim_default_colorscheme: alduin
+
+vim_fzf_find_args:
+  - \\(
+  - -type f
+  - -or
+  - -type l
+  - \\)
+  - -not -path '*/\.*'
 
 # bash
 bash_histsize: 500

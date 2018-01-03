@@ -4,7 +4,6 @@ vim_plugins_github:
   #- gmarik/Vundle.vim
   - godlygeek/tabular
   - itchyny/lightline.vim
-  - ctrlpvim/ctrlp.vim
   - mattn/emmet-vim
   - rking/ag.vim
   - scrooloose/nerdcommenter

@@ -1,26 +1,54 @@
 ---
-- file: path=~/dotfiles/vim/bundle state=directory mode=0755
+- name: Create directories
+  file:
+    path: "{{item}}"
+    state: directory
+    mode: '0755'
   tags: vim
-- file: path=~/dotfiles/vim/tmp state=directory mode=0755
-  tags: vim
-- file: path=~/dotfiles/vim/colors state=directory mode=0755
-  tags: vim
-- file: src=~/dotfiles/vim dest=~/.vim state=link
+  with_items:
+    - ~/dotfiles/vim/plugin
+    - ~/dotfiles/vim/bundle
+    - ~/dotfiles/vim/tmp
+    - ~/dotfiles/vim/colors
+
+- name: Link .vim directory
+  file:
+    src: ~/dotfiles/vim
+    dest: ~/.vim
+    state: link
   tags: vim
 
 - name: install fedora vim packages
   tags: vim
-  dnf: name={{item}} state=latest
+  dnf: name={{item}} state=present
   become: yes
   with_items: "{{ vim_packages.fedora }}"
   when: ansible_distribution in ("Fedora", "CentOS")
 
 - name: install ubuntu vim packages
   tags: vim
-  apt: name={{item}} state=latest
+  apt: name={{item}} state=present
   become: yes
   with_items: "{{ vim_packages.ubuntu }}"
   when: ansible_distribution == "Ubuntu"
+
+- name: Check if fzf.vim is present
+  tags: vim
+  stat:
+    path: ~/.fzf/fzf.vim
+    get_attributes: no
+    get_checksum: no
+    get_md5: no
+    get_mime: no
+  register: stat_fzf_vim
+
+- name: Link fzf.vim to plugin
+  tags: vim
+  file:
+    src: "{{stat_fzf_vim.stat.path}}"
+    dest: "~/dotfiles/vim/plugin/fzf.vim"
+    state: link
+  when: stat_fzf_vim.stat.exists
 
 - name: vimrc
   tags:

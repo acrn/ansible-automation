@@ -74,10 +74,6 @@ syntax enable
 {% if chromebook is defined %}
   " <C-v> closes chrome tab
   nnoremap <C-v> <C-w>
-  {% if 'ctrlpvim/ctrlp.vim' in vim_plugins_github %}
-    " Don't have a proper F5
-    nnoremap <leader>r :CtrlPClearAllCaches<cr>
-  {% endif %}
 {% endif %}
 
 nnoremap <C-k> 10k
@@ -113,6 +109,24 @@ set backupdir=~/.vim/tmp
   nnoremap <leader>gd :Gdiff<cr>
   nnoremap <leader>ge :Gedit<cr>
   nnoremap <leader>gs :Gstatus<cr>
+{% endif %}
+
+{% if stat_fzf_vim.stat.exists %}
+  let fzf_wrap={
+    \ 'source': join(["find",
+    {% for find_arg in vim_fzf_find_args %}
+      \ "{{find_arg}}",
+    {% endfor %}
+    \]),
+    \ 'options': [
+    \   '--color', 'dark',
+    \   '--expect', 'ctrl-v,ctrl-x,ctrl-t',
+    \   '--no-mouse',
+    \   '--prompt', '> ',
+    \ ]
+    \ }
+
+  nnoremap <C-p> :call fzf#run(fzf#wrap(fzf_wrap))<cr>
 {% endif %}
 
 " ctags
