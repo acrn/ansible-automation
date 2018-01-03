@@ -106,6 +106,15 @@ vnoremap <leader>n :normal
 set directory=~/.vim/tmp
 set backupdir=~/.vim/tmp
 
+" plugins
+{% if 'tpope/vim-fugitive' in vim_plugins_github %}
+  nnoremap <leader>gb :Gblame<cr>
+  nnoremap <leader>gc :Gcommit<cr>
+  nnoremap <leader>gd :Gdiff<cr>
+  nnoremap <leader>ge :Gedit<cr>
+  nnoremap <leader>gs :Gstatus<cr>
+{% endif %}
+
 " ctags
 set tags=./tags;$HOME
 
