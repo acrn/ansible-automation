@@ -1,9 +1,0 @@
----
-ansible_host: 192.168.7.1
-
-systemd_networkd_match:
-  name: enp2s0
-systemd_networkd_addresses:
-  - atom
-  - ns1
-  - dhcp1

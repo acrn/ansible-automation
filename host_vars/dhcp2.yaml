@@ -1,3 +1,0 @@
----
-ansible_host: 192.168.1.32
-dhcp_network_interface: eth0
