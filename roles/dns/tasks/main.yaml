@@ -1,15 +1,9 @@
 ---
-- name: install fedora bind
+- name: install bind
   tags: dns
-  dnf: name=bind state=latest
+  package:
+    name: bind
   become: yes
-  when: ansible_distribution == "Fedora"
-
-- name: install arch bind
-  tags: dns
-  pacman: name=bind state=present
-  become: yes
-  when: ansible_distribution.startswith('Arch Linux')
 
 - name: limit journal log size
   tags: dns

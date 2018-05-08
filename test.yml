@@ -13,12 +13,11 @@
         hostname: docker1
         image: docker_arch_systemd
         pull: no
-        command:
-          - /usr/lib/systemd/systemd
+        command: /usr/lib/systemd/systemd
 
     - name: Add container host
       add_host:
-        name: docker1
+        name: automation_test1
         ansible_connection: docker
         ansible_user: root
         groups:
@@ -26,4 +25,8 @@
 
 - hosts: docker_test_group
   roles:
-    - role: dns
+    - dhcpserver
+    - dns
+    - gitserver
+    - pxeserver
+    - webserver

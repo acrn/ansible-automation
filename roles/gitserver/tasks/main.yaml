@@ -25,6 +25,7 @@
     src: gitconfig
     dest: "{{ gitserver_home }}/.gitconfig"
   become: yes
+  become_method: ksu
   become_user: git
 
 - name: touch authorized_keys
@@ -32,8 +33,10 @@
   file:
     name: "{{ gitserver_home }}/.ssh/authorized_keys"
     mode: 0600
+    state: touch
   become: yes
   become_user: git
+  become_method: ksu
   changed_when: false
 
 # git init one or more bare repos on the server
@@ -41,6 +44,7 @@
   tags: gitserver
   command: git -C /var/git init --bare {{ item }}
   become: yes
+  become_method: ksu
   become_user: git
   when: init_repos is defined
   with_items: init_repos.split(',')
@@ -61,6 +65,7 @@
     dest: "{{ gitserver_backup_dir }}/backup.sh"
     mode: 0755
   become: yes
+  become_method: ksu
   become_user: git
 
 - name: systemd service
