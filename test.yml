@@ -1,0 +1,29 @@
+---
+- hosts: localhost
+  tasks:
+
+    - name: Build docker image
+      docker_image:
+        path: ./docker_arch_systemd
+        name: docker_arch_systemd
+
+    - name: Create docker container
+      docker_container:
+        name: automation_test1
+        hostname: docker1
+        image: docker_arch_systemd
+        pull: no
+        command:
+          - /usr/lib/systemd/systemd
+
+    - name: Add container host
+      add_host:
+        name: docker1
+        ansible_connection: docker
+        ansible_user: root
+        groups:
+          - docker_test_group
+
+- hosts: docker_test_group
+  roles:
+    - role: dns
